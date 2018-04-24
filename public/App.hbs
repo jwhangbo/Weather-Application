@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <title>Weather App</title>
+        <link href="App.css" type="text/css" rel="stylesheet"/>
+        <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    </head>
+    <body>
+        <div id="mapbox" class="w3-card"></div>
+        <form id="location" action="/" method="POST">
+            <input placeholder="Search" autocomplete="on" name="City">
+             <input id="sub" type = "submit">
+        </form>
+       
+        <div id="home"  class="w3-card">
+            <div id="homeloc" class="info w3-center w3-xxlarge"></div>
+            <div id="temp" class="info w3-center w3-xlarge"></div>
+            <div id="summary" class="info w3-center w3-xlarge"></div>
+        
+        </div>
+        
+        <div id="log" class="info w3-card w3-large">
+            <div id="log_text" class="w3-center">
+                <div class="w3-xlarge w3-center">Search History</div>
+            {{{file}}}</div>
+        </div>        
+        
+        <div id="newplace" class="w3-card">
+            <div id ="Location" class="info w3-center w3-xxlarge">{{location}}</div>
+            <div id ="temperature" class="info w3-center w3-xlarge">{{temperature}}</div>
+            <div id ="weather" class="info w3-center w3-xlarge">{{summary}}</div>
+
+        </div>  
+
+        <div style="display:none;"> 
+            <p id="lat">{{latitude}}</p>
+            <p id="lng">{{longitude}}</p>
+        </div>
+        
+        <script src="App.js"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC57P5Bx50i5TYKCK2w9N0OCVtjGvXnNmc&libraries=places&callback=theMap"></script>
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+    </body>
+</html>
