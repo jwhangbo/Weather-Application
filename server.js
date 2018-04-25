@@ -5,7 +5,6 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 
 var app = express();
-var dict = {};
 var history = [];
 var log_text = "";
 
@@ -24,9 +23,11 @@ app.get('/', (request, response) => {
 });
 
 app.post('/', function(request, response) {
+    /*
     dict = {};
-    console.log(request.body["City"]);
-    get_dict(request.body["City"]);
+    console.log(request.body)
+    //console.log(request.body["City"]);
+   // get_dict(request.body["City"]);
 
     setTimeout(()=> {
         history.push(dict);
@@ -34,56 +35,70 @@ app.post('/', function(request, response) {
         response.render(dpub + 'App.hbs',{location: dict["location"], temperature: dict["temperature"] + "°C", summary: dict["summary"], latitude: dict["lat"], longitude: dict["lng"], file: read_file()});
 
     }, 2000)
-   
-    
+    */
+    var location = request.body["location"]
+    get_location(location).then((dictionary)=> {
+        return get_weather(dictionary).then((weather)=>{
+            console.log(weather)
+        }, (error)=> {
+            console.log(error)
+        })
+    }, (error)=> {
+        console.log(error)
+    })
 })
 
-function get_dict(location){
-    get_location(location)
-};
+
 
 /**
  * Finds the location using Google Maps API.
  * @param {string} place - represents the coordinates of a location.
  */
 function get_location(place){
+    var dict = {}
     var link = `http://maps.googleapis.com/maps/api/geocode/json?address=${place}`
-    request ({
-        url: link,
-        json: true
-    },
-    (error, response, body) => {
+    return new Promise((resolve, reject) => {
+        request ({
+            url: link,
+            json: true
+        },
+    (err, resp, body) => {
         if (body.status === "OK"){
-            dict.location = place
-            var lat = (body.results[0].geometry["location"].lat);
-            var lng = (body.results[0].geometry["location"].lng);
-            dict.lat = lat
-            dict.lng = lng
-            get_weather(lat, lng)
-        } else if (body.status != "OK"){
-            console.log("Limit reached, please wait for a while")
+            dict.location = place;
+            dict.lat = (body.results[0].geometry["location"].lat);
+            dict.long = (body.results[0].geometry["location"].lng);
+            resolve(dict)
         }
-
+        else{
+            reject("Some thing in googlemaps went wrong")
+        }
     })
-
+    })
+    
 }
 /**
  * Gets the weather and returns a dictionary with the weather information.
  * @param {string} lat - The latitude of the location.
  * @param {string} lng - the longitude of the location.
  */
-function get_weather(lat, lng){
-    var link = `https://api.darksky.net/forecast/b10f1155187ae53296449ef6730b03d3/${lat},${lng}`;
-    request({
-        url: link,
-        json: true
-    },
+function get_weather(info){
+    var dict = info
+    var link = `https://api.darksky.net/forecast/b10f1155187ae53296449ef6730b03d3/${dict.lat},${dict.long}`;
+    return new Promise((resolve, reject) => {
+        request({
+            url: link,
+            json: true
+        },
     (error, response, body) => {
         if (!('code' in body)){
-            dict.temperature = Math.round((body.currently["temperature"]-32) * 5 / 9);
+            dict.temperature = Math.round((body.currently["temperature"]-32) * 5/9);
             dict.summary = body.currently["summary"];
-            return
+            resolve(dict)
         }
+        else{
+            reject("Something in darksky went wrong!")
+        }
+    })
     })
 }
 /**

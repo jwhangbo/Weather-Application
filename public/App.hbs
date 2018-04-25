@@ -7,10 +7,9 @@
     </head>
     <body>
         <div id="mapbox" class="w3-card"></div>
-        <form id="location" action="/" method="POST">
-            <input placeholder="Search" autocomplete="on" name="City">
+            <input id="Searchbox" placeholder="Search" autocomplete="on" name="City">
              <input id="sub" type = "submit">
-        </form>
+
        
         <div id="home"  class="w3-card">
             <div id="homeloc" class="info w3-center w3-xxlarge"></div>
@@ -36,9 +35,12 @@
             <p id="lat">{{latitude}}</p>
             <p id="lng">{{longitude}}</p>
         </div>
+
         
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="App.js"></script>
         <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyC57P5Bx50i5TYKCK2w9N0OCVtjGvXnNmc&libraries=places&callback=theMap"></script>
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
+
+
     </body>
 </html>

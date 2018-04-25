@@ -2,6 +2,7 @@
 Fuction that changes the homeloc div.
 If the it is able to get the cordinates of the user then it will send it to the temp and summary div
 Else it will say an error message if an error occurs*/
+
 function geo() {
     var home = document.getElementById("homeloc");
     var apiKey = "7727724c91d385de32cc9af5b98f52fd";
@@ -44,6 +45,28 @@ function theMap() {
         zoomControl: false
     });
 }
+
+$(function(){
+    $('#sub').click(function(e){
+        e.preventDefault();
+        console.log('select_link clicked');
+
+        var search = {}
+        search.location = $('#Searchbox').val()
+
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(search),
+            contentType: 'application/json',
+            url: 'http://localhost:8080/',
+            sucess: function(data) {
+                console.log('success');
+                consoel.log(JSON.stringify(data))
+            }
+        })
+    })
+})
+
 
 /** refreshs the map */
 google.maps.event.addDomListener(window, 'load', theMap);
