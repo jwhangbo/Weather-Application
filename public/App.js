@@ -1,31 +1,60 @@
-/**  geo weather 
-Fuction that changes the homeloc div.
-If the it is able to get the cordinates of the user then it will send it to the temp and summary div
-Else it will say an error message if an error occurs*/
-
+/**
+ * Stores home location
+ * @type {Object}
+ */
 var homelocation = {}
 
+/** 
+ * geo weather
+ *Fuction that changes the homeloc div.
+ *If the it is able to get the cordinates of the user then it will send it to the temp and summary div
+ *Else it will say an error message if an error occurs
+ */
 function geo() {
+    /**
+     * variable to get home location
+     * @type {String}
+     */
     var home = document.getElementById("homeloc");
+
+    /**
+     * Variable to store API key
+     * @type {String}
+     */
     var apiKey = "7727724c91d385de32cc9af5b98f52fd";
+
+    /**
+     * Variable used to store url for forecast
+     * @type {String}
+     */
     var url = 'https://api.forecast.io/forecast/';
 
     navigator.geolocation.getCurrentPosition(success, error);
-    /** success functions that returns the temp and summary from the forecast */
+    /**
+     * success functions that returns the temp and summary from the forecast
+     * @param  {int} position Stores coordinate location info
+     */
     function success(position) {
         homelocation["lat"] = position.coords.latitude;
         homelocation["long"] = position.coords.longitude;
     }
-    /** error message */
+    /** 
+     * error message
+     */
     function error() {
         home.innerHTML = "Unable to retrieve your location. Please turn on location.";
     }
 }
 
 geo();
-/** Map Window 
-Just a Map that changes with the lng and lat*/
+/**
+ * Functino that builds the map using latitude and longitude
+ * @param  {[type]} lati  used for latitude
+ * @param  {[type]} longi used for longitude
+ * @return {[type]}       [description]
+ */
 function theMap(lati, longi) {
+
     var map = new google.maps.Map(document.getElementById('mapbox'), {
         center: {
             lat: parseInt(document.getElementById("lat").innerHTML),
@@ -40,11 +69,22 @@ function theMap(lati, longi) {
     });
 }
 
+
+/**
+ * Ajax 
+ * @param  {Object} #sub Ajax function to get into on link cicked
+ * @param  {Objext} $.ajax Parses jason info
+ * @return {Object} Parsed data from JSON file
+ */
 $(function(){
     $('#sub').click(function(e){
         e.preventDefault();
         console.log('select_link clicked');
 
+        /**
+         * Gets value from searchbox to search for location
+         * @type {Object}
+         */
         var search = {}
         search.location = $('#Searchbox').val();
         search.home = homelocation;
@@ -66,6 +106,11 @@ $(function(){
     })
 })
 
+
+/**
+ * Function that loads info that has been stored
+ * @param  {Object} returned Grabs all the info stored to be re-displayed
+ */
 function loadinfo(returned){ 
     console.log(returned)
     document.getElementById("homeloc").innerHTML = "Current Location";
@@ -78,5 +123,7 @@ function loadinfo(returned){
     document.getElementById("lat").innerHTML = returned.requested["lat"]
     document.getElementById("lng").innerHTML = returned.requested["long"]
 }
-/** refreshs the map */
+/** 
+ * refreshs the map
+ */
 google.maps.event.addDomListener(window, 'load', theMap);
