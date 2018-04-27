@@ -7,8 +7,6 @@ const fs = require('fs');
 var app = express();
 var history = [];
 var log_text = "";
-
-
 app.set('view engine', 'hbs')
 
 app.use(bodyParser.json());
@@ -23,23 +21,20 @@ app.get('/', (request, response) => {
 });
 
 app.post('/', function(request, response) {
-    /*
-    dict = {};
-    console.log(request.body)
-    //console.log(request.body["City"]);
-   // get_dict(request.body["City"]);
-
-    setTimeout(()=> {
-        history.push(dict);
-        write_file(history);
-        response.render(dpub + 'App.hbs',{location: dict["location"], temperature: dict["temperature"] + "°C", summary: dict["summary"], latitude: dict["lat"], longitude: dict["lng"], file: read_file()});
-
-    }, 2000)
-    */
+    var returning_data = {}
     var location = request.body["location"]
+    var home = request.body["home"]
+    
+    
     get_location(location).then((dictionary)=> {
         return get_weather(dictionary).then((weather)=>{
-            console.log(weather)
+            returning_data["requested"] = weather
+            return get_weather(home).then((weather)=>{
+                returning_data["home"] = weather
+                response.send(JSON.stringify(returning_data))
+            }, (error) => {
+                console.log(error)
+            })
         }, (error)=> {
             console.log(error)
         })
@@ -48,14 +43,14 @@ app.post('/', function(request, response) {
     })
 })
 
-
-
 /**
  * Finds the location using Google Maps API.
  * @param {string} place - represents the coordinates of a location.
  */
 function get_location(place){
+    console.log(place)
     var dict = {}
+    var key = "AIzaSyD_uaW1hFHnMbrH_7zAQ2gTpybH-NG8KGs"
     var link = `http://maps.googleapis.com/maps/api/geocode/json?address=${place}`
     return new Promise((resolve, reject) => {
         request ({
@@ -70,7 +65,7 @@ function get_location(place){
             resolve(dict)
         }
         else{
-            reject("Some thing in googlemaps went wrong")
+            reject(body.status)
         }
     })
     })
@@ -82,6 +77,7 @@ function get_location(place){
  * @param {string} lng - the longitude of the location.
  */
 function get_weather(info){
+    console.log(info)
     var dict = info
     var link = `https://api.darksky.net/forecast/b10f1155187ae53296449ef6730b03d3/${dict.lat},${dict.long}`;
     return new Promise((resolve, reject) => {
@@ -96,7 +92,7 @@ function get_weather(info){
             resolve(dict)
         }
         else{
-            reject("Something in darksky went wrong!")
+            reject(body)
         }
     })
     })
@@ -119,7 +115,6 @@ function read_file(){
     log_text = log_text + file_cont + "<br>"
     return log_text
 }
-
 
 /**
  * makes the server accessable via an internet browser
