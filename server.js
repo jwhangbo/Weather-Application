@@ -4,8 +4,22 @@ const hbs = require('hbs');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 
+/**
+ * Variable used to use express() module
+ * @type {Objext}
+ */
 var app = express();
+
+/**
+ * Variable used to store search history
+ * @type {Array}
+ */
 var history = [];
+
+/**
+ * Variable used for log text
+ * @type {String}
+ */
 var log_text = "";
 app.set('view engine', 'hbs')
 
@@ -13,6 +27,11 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static(__dirname + '/public'));
 
+
+/**
+ * Variable used to store /public/ directory
+ * @type {[type]}
+ */
 var dpub = __dirname + '/public/'
 console.log(dpub)
 
