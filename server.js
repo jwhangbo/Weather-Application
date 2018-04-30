@@ -50,6 +50,7 @@ app.post('/', function(request, response) {
             returning_data["requested"] = weather
             return get_weather(home).then((weather)=>{
                 returning_data["home"] = weather
+                console.log(returning_data)
                 response.send(JSON.stringify(returning_data))
             }, (error) => {
                 console.log(error)
