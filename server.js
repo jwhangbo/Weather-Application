@@ -96,15 +96,13 @@ function get_location(place){
  * @param {string} lat - The latitude of the location.
  * @param {string} lng - the longitude of the location.
  */
-function get_weather(info){
-    console.log(info)
-    var dict = info
-    var link = `https://api.darksky.net/forecast/b10f1155187ae53296449ef6730b03d3/${dict.lat},${dict.long}`;
-    return new Promise((resolve, reject) => {
-        request({
-            url: link,
-            json: true
-        },
+
+function get_weather(lat, lng){
+    var link = `https://api.darksky.net/forecast/[put_api_key]/${lat},${lng}`; //api key
+    request({
+        url: link,
+        json: true
+    },
     (error, response, body) => {
         if (!('code' in body)){
             dict.temperature = Math.round((body.currently["temperature"]-32) * 5/9);

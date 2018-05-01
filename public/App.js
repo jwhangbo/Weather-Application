@@ -16,17 +16,7 @@ function geo() {
      * @type {String}
      */
     var home = document.getElementById("homeloc");
-
-    /**
-     * Variable to store API key
-     * @type {String}
-     */
-    var apiKey = "7727724c91d385de32cc9af5b98f52fd";
-
-    /**
-     * Variable used to store url for forecast
-     * @type {String}
-     */
+    var apiKey = "";
     var url = 'https://api.forecast.io/forecast/';
 
     //navigator.geolocation.getCurrentPosition(success, error);
