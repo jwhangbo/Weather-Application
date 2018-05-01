@@ -29,7 +29,7 @@ function geo() {
      */
     var url = 'https://api.forecast.io/forecast/';
 
-    navigator.geolocation.getCurrentPosition(success, error);
+    //navigator.geolocation.getCurrentPosition(success, error);
     /**
      * success functions that returns the temp and summary from the forecast
      * @param  {int} position Stores coordinate location info
@@ -100,7 +100,7 @@ $(function(){
                 var returned = JSON.parse(JSON.stringify(data))
                 returned = JSON.parse(data)
                 loadinfo(returned)
-                google.maps.event.addDomListener(window, 'load', theMap(returned.requested["lat"], returned.requested["long"]));
+                //google.maps.event.addDomListener(window, 'load', theMap(returned.requested["lat"], returned.requested["long"]));
             }
         })
     })
