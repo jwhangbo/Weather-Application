@@ -73,7 +73,7 @@ function get_location(place){
  * @param {string} lng - the longitude of the location.
  */
 function get_weather(lat, lng){
-    var link = `https://api.darksky.net/forecast/b10f1155187ae53296449ef6730b03d3/${lat},${lng}`;
+    var link = `https://api.darksky.net/forecast/00e618f26374bf484fb2540fc87ca8fc/${lat},${lng}`;
     request({
         url: link,
         json: true
