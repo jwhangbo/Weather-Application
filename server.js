@@ -4,18 +4,34 @@ const hbs = require('hbs');
 const bodyParser = require('body-parser');
 const fs = require('fs');
 
+/**
+ * Variable used to use express() module
+ * @type {Objext}
+ */
 var app = express();
-var dict = {};
+
+/**
+ * Variable used to store search history
+ * @type {Array}
+ */
 var history = [];
+
+/**
+ * Variable used for log text
+ * @type {String}
+ */
 var log_text = "";
-
-
 app.set('view engine', 'hbs')
 
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}))
 app.use(express.static(__dirname + '/public'));
 
+
+/**
+ * Variable used to store /public/ directory
+ * @type {[type]}
+ */
 var dpub = __dirname + '/public/'
 console.log(dpub)
 
@@ -24,54 +40,63 @@ app.get('/', (request, response) => {
 });
 
 app.post('/', function(request, response) {
-    dict = {};
-    console.log(request.body["City"]);
-    get_dict(request.body["City"]);
-
-    setTimeout(()=> {
-        history.push(dict);
-        write_file(history);
-        response.render(dpub + 'App.hbs',{location: dict["location"], temperature: dict["temperature"] + "°C", summary: dict["summary"], latitude: dict["lat"], longitude: dict["lng"], file: read_file()});
-
-    }, 2000)
-   
+    var returning_data = {}
+    var location = request.body["location"]
+    var home = request.body["home"]
     
+    
+    get_location(location).then((dictionary)=> {
+        return get_weather(dictionary).then((weather)=>{
+            returning_data["requested"] = weather
+            return get_weather(home).then((weather)=>{
+                returning_data["home"] = weather
+                console.log(returning_data)
+                response.send(JSON.stringify(returning_data))
+            }, (error) => {
+                console.log(error)
+            })
+        }, (error)=> {
+            console.log(error)
+        })
+    }, (error)=> {
+        console.log(error)
+    })
 })
-
-function get_dict(location){
-    get_location(location)
-};
 
 /**
  * Finds the location using Google Maps API.
  * @param {string} place - represents the coordinates of a location.
  */
 function get_location(place){
+    console.log(place)
+    var dict = {}
+    var key = "AIzaSyD_uaW1hFHnMbrH_7zAQ2gTpybH-NG8KGs"
     var link = `http://maps.googleapis.com/maps/api/geocode/json?address=${place}`
-    request ({
-        url: link,
-        json: true
-    },
-    (error, response, body) => {
+    return new Promise((resolve, reject) => {
+        request ({
+            url: link,
+            json: true
+        },
+    (err, resp, body) => {
         if (body.status === "OK"){
-            dict.location = place
-            var lat = (body.results[0].geometry["location"].lat);
-            var lng = (body.results[0].geometry["location"].lng);
-            dict.lat = lat
-            dict.lng = lng
-            get_weather(lat, lng)
-        } else if (body.status != "OK"){
-            console.log("Limit reached, please wait for a while")
+            dict.location = place;
+            dict.lat = (body.results[0].geometry["location"].lat);
+            dict.long = (body.results[0].geometry["location"].lng);
+            resolve(dict)
         }
-
+        else{
+            reject(body.status)
+        }
     })
-
+    })
+    
 }
 /**
  * Gets the weather and returns a dictionary with the weather information.
  * @param {string} lat - The latitude of the location.
  * @param {string} lng - the longitude of the location.
  */
+
 function get_weather(lat, lng){
     var link = `https://api.darksky.net/forecast/[put_api_key]/${lat},${lng}`; //api key
     request({
@@ -80,10 +105,14 @@ function get_weather(lat, lng){
     },
     (error, response, body) => {
         if (!('code' in body)){
-            dict.temperature = Math.round((body.currently["temperature"]-32) * 5 / 9);
+            dict.temperature = Math.round((body.currently["temperature"]-32) * 5/9);
             dict.summary = body.currently["summary"];
-            return
+            resolve(dict)
         }
+        else{
+            reject(body)
+        }
+    })
     })
 }
 /**
@@ -104,7 +133,6 @@ function read_file(){
     log_text = log_text + file_cont + "<br>"
     return log_text
 }
-
 
 /**
  * makes the server accessable via an internet browser
