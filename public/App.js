@@ -4,7 +4,7 @@ If the it is able to get the cordinates of the user then it will send it to the 
 Else it will say an error message if an error occurs*/
 function geo() {
     var home = document.getElementById("homeloc");
-    var apiKey = "7727724c91d385de32cc9af5b98f52fd";
+    var apiKey = "00e618f26374bf484fb2540fc87ca8fc";
     var url = 'https://api.forecast.io/forecast/';
 
     navigator.geolocation.getCurrentPosition(success, error);
