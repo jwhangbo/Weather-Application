@@ -113,7 +113,6 @@ function get_weather(lat, lng){
             reject(body)
         }
     })
-    })
 }
 /**
  * Appends list into search.json.
