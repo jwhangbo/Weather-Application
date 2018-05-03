@@ -7,16 +7,11 @@
     </head>
     <body>
         <header id="header">
-            <form id="location" action="/" method="POST">
-                <input placeholder="Search" autocomplete="on" name="City" id="searchText">
-                <input id="sub" type = "submit">
-            </form>
-        </header>
-
-        <div id="mapbox" class="w3-card"></div>
             <input id="Searchbox" placeholder="Search" autocomplete="on" name="City">
-             <input id="sub" type = "submit">
-
+            <input id="sub" type = "submit">
+        </header>
+    
+        <div id="mapbox" class="w3-card"></div>
        
         <div id="home"  class="w3-card">
             <div id="homeloc" class="info w3-center w3-xxlarge"></div>
@@ -30,6 +25,21 @@
 
         <div id="weather" class="w3-card">
             <h2 class="el-head">5-Day</h2>
+            <div id="w_day1" class="w_days">
+                <div id="w_icon"></div>
+            </div>
+            <div id="w_day2" class="w_days">
+                <div id="w_icon"></div>
+            </div>
+            <div id="w_day3" class="w_days">
+                <div id="w_icon"></div>
+            </div>
+            <div id="w_day4" class="w_days">
+                <div id="w_icon"></div>
+            </div>
+            <div id="w_day5" class="w_days">
+                <div id="w_icon"></div>
+            </div>
         </div>
 
         <div id="news" class="w3-card">
@@ -45,7 +55,7 @@
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
         <script src="App.js"></script>
         <!-- api key needed below -->
-        <script src="https://maps.googleapis.com/maps/api/js?key=[api key here]&libraries=places&callback=theMap"></script>
+        <script src="https://maps.googleapis.com/maps/api/js?key={{apikey}}&libraries=places&callback=theMap"></script>
         <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min.js"></script>
     </body>
 </html>

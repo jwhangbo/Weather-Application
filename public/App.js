@@ -2,7 +2,8 @@
  * Stores home location
  * @type {Object}
  */
-var homelocation = {}
+
+
 
 /** 
  * geo weather
@@ -15,7 +16,6 @@ function geo() {
      * variable to get home location
      * @type {String}
      */
-    var home = document.getElementById("homeloc");
     var apiKey = "";
     var url = 'https://api.forecast.io/forecast/';
 
@@ -25,8 +25,10 @@ function geo() {
      * @param  {int} position Stores coordinate location info
      */
     function success(position) {
-        homelocation["lat"] = position.coords.latitude;
-        homelocation["long"] = position.coords.longitude;
+        var homecoor = {}
+        homecoor["lat"] = position.coords.latitude;
+        homecoor["long"] = position.coords.longitude;
+        google.maps.event.addDomListener(window, 'load', theMap(homecoor["lat"], homecoor["long"]));
     }
     /** 
      * error message
@@ -35,7 +37,6 @@ function geo() {
         home.innerHTML = "Unable to retrieve your location. Please turn on location.";
     }
 }
-
 geo();
 /**
  * Functino that builds the map using latitude and longitude
@@ -43,14 +44,14 @@ geo();
  * @param  {[type]} longi used for longitude
  * @return {[type]}       [description]
  */
-function theMap(lati, longi) {
+function theMap(lat, long) {
 
     var map = new google.maps.Map(document.getElementById('mapbox'), {
         center: {
-            lat: parseInt(document.getElementById("lat").innerHTML),
-            lng: parseInt(document.getElementById("lng").innerHTML)
+            lat: parseInt(lat),
+            lng: parseInt(long)
         },
-        zoom: 7,
+        zoom: 9,
         draggable: false,
         fullscreenControl: false,
         streetViewControl: false,
@@ -58,7 +59,7 @@ function theMap(lati, longi) {
         zoomControl: false
     });
 }
-
+geo();
 
 /**
  * Ajax 
@@ -77,8 +78,6 @@ $(function(){
          */
         var search = {}
         search.location = $('#Searchbox').val();
-        search.home = homelocation;
-
 
         $.ajax({
             type: 'POST',
@@ -89,8 +88,7 @@ $(function(){
                 console.log('success');
                 var returned = JSON.parse(JSON.stringify(data))
                 returned = JSON.parse(data)
-                loadinfo(returned)
-                google.maps.event.addDomListener(window, 'load', theMap(returned.requested["lat"], returned.requested["long"]));
+                google.maps.event.addDomListener(window, 'load', theMap(returned['lat'],returned['long']));
             }
         })
     })
@@ -116,4 +114,4 @@ function loadinfo(returned){
 /** 
  * refreshs the map
  */
-google.maps.event.addDomListener(window, 'load', theMap);
+
