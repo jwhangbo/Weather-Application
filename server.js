@@ -77,26 +77,7 @@ app.post('/', function(request, response) {
 })
 
 
-<<<<<<< HEAD
-function get_weather(lat, lng){
-    var link = `https://api.darksky.net/forecast/[put_api_key]/${lat},${lng}`; //api key
-    request({
-        url: link,
-        json: true
-    },
-    (error, response, body) => {
-        if (!('code' in body)){
-            dict.temperature = Math.round((body.currently["temperature"]-32) * 5/9);
-            dict.summary = body.currently["summary"];
-            resolve(dict)
-        }
-        else{
-            reject(body)
-        }
-    })
-}
-=======
->>>>>>> 4c5deeb52cbfd2f2103a334f55e8db675672169a
+
 /**
  * Appends list into search.json.
  * @param {array} list - writes a list object into a json file.
