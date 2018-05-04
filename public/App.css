@@ -55,6 +55,7 @@
     text-align: center;
 }
 
+
 #Searchbox, #sub {
     top: 0;
     position: relative;
@@ -100,6 +101,20 @@
     width: 100%;
     z-index: 100;
     background: rgba(255,255,255,0.5);
+}
+
+#w_icon {
+    position: relative;
+    height: 100%;
+    width: 60px ;
+    background-color: red;
+}
+
+.w_days {
+    position: relative;
+    height: 15%;
+    background-color: blue;
+    margin: 7px;
 }
 
 #w_icon {

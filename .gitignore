@@ -1,7 +1,6 @@
 /node_modules
-<<<<<<< HEAD
 search.json
-=======
-Apikeys.json
->>>>>>> 4c5deeb52cbfd2f2103a334f55e8db675672169a
 apikeywriter.js
+package.json
+package-lock.json
+Apikeys.json

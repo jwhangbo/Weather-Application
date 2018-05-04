@@ -48,8 +48,8 @@ function theMap(lat, long) {
 
     var map = new google.maps.Map(document.getElementById('mapbox'), {
         center: {
-            lat: parseInt(lat),
-            lng: parseInt(long)
+            lat: parseFloat(lat),
+            lng: parseFloat(long)
         },
         zoom: 9,
         draggable: false,

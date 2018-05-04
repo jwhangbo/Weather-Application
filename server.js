@@ -4,6 +4,8 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 
 const geo = require("./geolocation.js")
+const news = require("./news.js")
+
 
 const keys = get_keys()
 /**
@@ -51,6 +53,12 @@ app.post('/', function(request, response) {
 
     geo.get_location(location, keys.geolocation).then((dictionary)=>{
         response.send(JSON.stringify(dictionary))
+
+        return news.NewsHeading(location, keys.news).then((dictionary)=>{
+            console.log(dictionary);
+        }, (error)=>{
+            console.log(error);
+        })
     },(error)=>{
         console.log(error)
     })
@@ -75,8 +83,6 @@ app.post('/', function(request, response) {
     })
     */
 })
-
-
 
 /**
  * Appends list into search.json.
