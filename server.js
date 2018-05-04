@@ -53,6 +53,7 @@ app.post('/', function(request, response) {
     var location = request.body["location"]
 
     geo.get_location(location, keys.geolocation).then((dictionary)=>{
+<<<<<<< HEAD
         response.send(JSON.stringify(dictionary))
         returning_data["location"] = dictionary
         return news.NewsHeading(location, keys.news).then((dictionary)=>{
@@ -63,6 +64,14 @@ app.post('/', function(request, response) {
             }, (error)=>{
                 console.log(error);
             })
+=======
+        //response.send(JSON.stringify(dictionary))
+        returning_data["location"] = dictionary
+        return news.NewsHeading(location, keys.news).then((dictionary)=>{
+            returning_data["headlines"] = dictionary
+            console.log(returning_data)
+            response.send(JSON.stringify(returning_data))
+>>>>>>> a966933223ecc95c1d101335df73de7249f03501
         }, (error)=>{
             console.log(error);
         })

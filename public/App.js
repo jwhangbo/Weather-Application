@@ -88,12 +88,13 @@ $(function(){
                 console.log('success');
                 var returned = JSON.parse(JSON.stringify(data))
                 returned = JSON.parse(data)
-                console.log(JSON.stringify(returned.length));
-                google.maps.event.addDomListener(window, 'load', theMap(returned['lat'],returned['long']));
+                google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'],returned.location['long']));
+                //load_news(returned["headlines"])
             }
         })
     })
 })
+
 
 
 /**
@@ -112,6 +113,19 @@ function loadinfo(returned){
     document.getElementById("lat").innerHTML = returned.requested["lat"]
     document.getElementById("lng").innerHTML = returned.requested["long"]
 }
+
+function load_news(dict){
+    console.log(dict)
+    
+    
+    /*
+    for(var i = 0; i <= dict["dict_title"].length;i++){
+        console.log(dict[JSON.stringify(i)])
+    }
+    */
+}
+
+
 /** 
  * refreshs the map
  */
