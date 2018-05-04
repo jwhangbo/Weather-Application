@@ -6,6 +6,7 @@ const fs = require('fs');
 const geo = require("./geolocation.js")
 const news = require("./news.js")
 
+
 const keys = get_keys()
 /**
  * Variable used to use express() module
@@ -52,6 +53,7 @@ app.post('/', function(request, response) {
 
     geo.get_location(location, keys.geolocation).then((dictionary)=>{
         response.send(JSON.stringify(dictionary))
+
         return news.NewsHeading(location, keys.news).then((dictionary)=>{
             console.log(dictionary);
         }, (error)=>{
