@@ -52,10 +52,12 @@ app.post('/', function(request, response) {
     var location = request.body["location"]
 
     geo.get_location(location, keys.geolocation).then((dictionary)=>{
-        response.send(JSON.stringify(dictionary))
-
+        //response.send(JSON.stringify(dictionary))
+        returning_data["location"] = dictionary
         return news.NewsHeading(location, keys.news).then((dictionary)=>{
-            console.log(dictionary);
+            returning_data["headlines"] = dictionary
+            console.log(returning_data)
+            response.send(JSON.stringify(returning_data))
         }, (error)=>{
             console.log(error);
         })
