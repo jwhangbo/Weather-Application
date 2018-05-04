@@ -1,6 +1,5 @@
 const request = require('request');
 
-
 /**
  * Builds 5 day forecast
  * @param  {String} location Location to obtain weather for
@@ -8,7 +7,7 @@ const request = require('request');
  * @return {Dictionary}          Build up dictionary with all info needed.
  */
 module.exports.forecast5days = function(location, key) {
-    return new Promise((resolve, reject) => {
+    return new Promise  ((resolve, reject) => {
         var link = `https://api.worldweatheronline.com/premium/v1/weather.ashx?q=${location}&num_of_days=5&key=${key}&fx=yes&tp=24&format=json`
         request(
             link,

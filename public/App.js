@@ -39,27 +39,33 @@ function geo() {
 }
 geo();
 /**
- * Functino that builds the map using latitude and longitude
+ * Function that builds the map using latitude and longitude
  * @param  {[type]} lati  used for latitude
  * @param  {[type]} longi used for longitude
  * @return {[type]}       [description]
  */
-function theMap(lat, long) {
 
-    var map = new google.maps.Map(document.getElementById('mapbox'), {
-        center: {
-            lat: parseFloat(lat),
-            lng: parseFloat(long)
-        },
-        zoom: 9,
-        draggable: false,
+
+function theMap(lati, longi) {
+
+   var map = new google.maps.Map(document.getElementById('mapbox'), {
+        center: {lat: lati, lng: longi},
+        zoom: 13,
+        draggable: true,
         fullscreenControl: false,
         streetViewControl: false,
         mapTypeControl: false,
-        zoomControl: false
+        zoomControl: true
     });
+    
+    var marker = new google.maps.Marker({
+    position: {lat: lati, lng: longi},
+    map: map,
+    });
+    
 }
 geo();
+
 
 /**
  * Ajax 
@@ -87,9 +93,11 @@ $(function() {
             success: function(data) {
                 console.log('success');
                 var returned = JSON.parse(JSON.stringify(data))
+                console.log(returned)
                 returned = JSON.parse(data)
                 google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'], returned.location['long']));
                 load_news(returned["headlines"])
+                load_weather(returned.weather)
             }
         })
     })
@@ -139,6 +147,14 @@ function load_news(dict) {
         console.log(dict[JSON.stringify(i)])
     }
     */
+}
+
+function load_weather(dict){
+    document.getElementById("w_day1").innerHTML = dict["day 1"]
+    document.getElementById("w_day2").innerHTML = dict["day 2"]
+    document.getElementById("w_day3").innerHTML = dict["day 3"]
+    document.getElementById("w_day4").innerHTML = dict["day 4"]
+    document.getElementById("w_day5").innerHTML = dict["day 5"]    
 }
 
 
