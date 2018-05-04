@@ -4,8 +4,37 @@
         <title>Weather App</title>
         <link href="App.css" type="text/css" rel="stylesheet"/>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
+        #Searchbox {
+            width: 80%;
+        }
+
+        #sides {
+            width: 10%
+        }
+
+        #sub {
+            width: 10%
+        }
+        </style>
     </head>
     <body>
+        <!-- Navbar -->
+        <div class="w3-top header">
+            <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+                <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+                <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4" id="sides"><i class="fa fa-home w3-margin-right"></i>Logo</a>
+                <input type="text" id="Searchbox" class="w3-bar-item w3-padding-large w3-theme-d4 w3-theme-d4" placeholder="Search" name="City">
+                <!--<a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4" id="sides sub"><i class="fa fa-home w3-margin-right"></i>Logo</a>
+                <button class="w3-bar-item w3-button w3-padding-large w3-theme-d4" id="sub sides">Submit</button>-->
+                <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4" id="sub"><i class="fa fa-home w3-margin-right"></i>Submit</a>
+            </div>
+        </div>
+        <!--
         <header id="header">
             <img id="logo" src="https://android.giveawayoftheday.com/wp-content/plugins/gotd_googleplay_plugin/images/2018/01/com.rainystudio.pixelnougaticonpack_app_icon_1516009340.png">
             <input id="Searchbox" placeholder="Search" autocomplete="on" name="City">
@@ -13,7 +42,8 @@
             <button id="sub">Settings</button>
             <div id="msg"></div>
         </header>
-    
+        -->
+        <div id="msg"></div>
         <div id="mapbox" class="w3-card"></div>
        
         <div id="home"  class="w3-card">
