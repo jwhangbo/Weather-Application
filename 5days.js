@@ -1,6 +1,5 @@
 const request = require('request');
 
-
 /**
  * Builds 5 day forecast
  * @param  {String} location Location to obtain weather for
@@ -14,8 +13,6 @@ module.exports.forecast5days = function(location, key) {
             link,
             function(error, response, body) {
                 if (!error && response.statusCode == 200) {
-
-
                     var result = JSON.parse(body);
                     var xdays = 0;
                     var html = {};
@@ -33,24 +30,12 @@ module.exports.forecast5days = function(location, key) {
                                     html["Day " + ++xdays] = desc
                                     break;
                             }
-
                         });
-
                     }
-
                     resolve(html);
                 } else {
-                    reject("Error occured");
+                    reject(body);
                 }
             });
     });
 };
-
-
-
-/*
- forecast5days("Vancouver","5c64f9b43c864db9968204205180105").then((html)=>{
- 	console.log(html)}).catch(function(){
- 		console.log("Error occured")
- 	})
-*/
