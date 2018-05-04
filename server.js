@@ -4,6 +4,9 @@ const bodyParser = require('body-parser');
 const fs = require('fs');
 
 const geo = require("./geolocation.js")
+const news = require("./news.js")
+const forecast = require("./5days.js")
+
 
 const keys = get_keys()
 /**
@@ -50,7 +53,21 @@ app.post('/', function(request, response) {
     var location = request.body["location"]
 
     geo.get_location(location, keys.geolocation).then((dictionary)=>{
-        response.send(JSON.stringify(dictionary))
+        //response.send(JSON.stringify(dictionary))
+        returning_data["location"] = dictionary
+        return news.NewsHeading(location, keys.news).then((dictionary)=>{
+            returning_data["headlines"] = dictionary
+            //response.send(JSON.stringify(returning_data))
+            return forecast.forecast5days(returning_data.location["location"], keys.worldweatheronline).then((dictionary)=>{
+                returning_data["weather"]=dictionary
+                console.log(returning_data)
+                response.send(JSON.stringify(returning_data))
+            },(error)=>{
+                console.log(error)
+            })
+        }, (error)=>{
+            console.log(error);
+        })
     },(error)=>{
         console.log(error)
     })
@@ -75,7 +92,6 @@ app.post('/', function(request, response) {
     })
     */
 })
-
 
 /**
  * Appends list into search.json.

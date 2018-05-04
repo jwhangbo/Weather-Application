@@ -5,7 +5,10 @@ const fs = require("fs")
 dict = {
     geolocation:"[ApiKey]",
     darksky:"[ApiKey]",
-    googlemaps:"[ApiKey]"
+    googlemaps:"[ApiKey]",
+    worldweatheronline:"[ApiKey]".
 }
+
+
 
 fs.writeFileSync("Apikeys.json", JSON.stringify(dict))

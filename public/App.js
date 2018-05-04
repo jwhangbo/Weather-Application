@@ -34,7 +34,7 @@ function geo() {
      * error message
      */
     function error() {
-        home.innerHTML = "Unable to retrieve your location. Please turn on location.";
+        msg.innerHTML = "Unable to retrieve your location. Please turn on location.";
     }
 }
 geo();
@@ -44,6 +44,7 @@ geo();
  * @param  {[type]} longi used for longitude
  * @return {[type]}       [description]
  */
+
 
 function theMap(lati, longi) {
 
@@ -92,12 +93,17 @@ $(function(){
             success: function(data) {
                 console.log('success');
                 var returned = JSON.parse(JSON.stringify(data))
+                console.log(returned)
                 returned = JSON.parse(data)
-                google.maps.event.addDomListener(window, 'load', theMap(returned['lat'],returned['long']));
+                google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'],returned.location['long']));
+                load_weather(returned.weather)
+                //load_news(returned["headlines"])
+
             }
         })
     })
 })
+
 
 
 /**
@@ -116,7 +122,52 @@ function loadinfo(returned){
     document.getElementById("lat").innerHTML = returned.requested["lat"]
     document.getElementById("lng").innerHTML = returned.requested["long"]
 }
+
+function load_news(dict){
+    console.log(dict)
+    
+    
+    /*
+    for(var i = 0; i <= dict["dict_title"].length;i++){
+        console.log(dict[JSON.stringify(i)])
+    }
+    */
+}
+
+function load_weather(dict){
+    document.getElementById("w_day1").innerHTML = dict["day 1"]
+    document.getElementById("w_day2").innerHTML = dict["day 2"]
+    document.getElementById("w_day3").innerHTML = dict["day 3"]
+    document.getElementById("w_day4").innerHTML = dict["day 4"]
+    document.getElementById("w_day5").innerHTML = dict["day 5"]    
+}
+
+
 /** 
  * refreshs the map
  */
 
+sub = document.getElementById("sub")
+sub.addEventListener("click",function(){
+    msg.innerHTML = ""
+})
+
+//borrowed from w3schools for initial layout
+var slideIndex = 0;
+showSlides();
+
+function showSlides() {
+    var i;
+    var slides = document.getElementsByClassName("mySlides");
+    var dots = document.getElementsByClassName("dot");
+    for (i = 0; i < slides.length; i++) {
+       slides[i].style.display = "none";  
+    }
+    slideIndex++;
+    if (slideIndex > slides.length) {slideIndex = 1}    
+    for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+    }
+    slides[slideIndex-1].style.display = "block";
+    setTimeout(showSlides, 2000); // Change image every 2 seconds
+}
