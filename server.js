@@ -29,7 +29,7 @@ var log_text = "";
 app.set('view engine', 'hbs')
 
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({extended: false}))
+app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(__dirname + '/public'));
 
 
@@ -43,7 +43,7 @@ app.use(express.static(__dirname + '/public'));
 var dpub = __dirname + '/public/'
 
 app.get('/', (request, response) => {
-    response.render(dpub + 'App.hbs',{
+    response.render(dpub + 'App.hbs', {
         "apikey": keys.googlemaps
     });
 });
@@ -51,35 +51,22 @@ app.get('/', (request, response) => {
 app.post('/', function(request, response) {
     var returning_data = {}
     var location = request.body["location"]
-
-    geo.get_location(location, keys.geolocation).then((dictionary)=>{
-<<<<<<< HEAD
-        response.send(JSON.stringify(dictionary))
-        returning_data["location"] = dictionary
-        return news.NewsHeading(location, keys.news).then((dictionary)=>{
-            returning_data["headlines"] = dictionary
-            return five_day.forecast5days(location, keys.worldweatheronline).then((dictionary)=>{
-                returning_data["weather"] = dictionary
-                response.send(returning_data)
-            }, (error)=>{
-                console.log(error);
-            })
-=======
+    geo.get_location(location, keys.geolocation).then((dictionary) => {
         //response.send(JSON.stringify(dictionary))
         returning_data["location"] = dictionary
-        return news.NewsHeading(location, keys.news).then((dictionary)=>{
+        return news.NewsHeading(location, keys.news).then((dictionary) => {
             returning_data["headlines"] = dictionary
             console.log(returning_data)
             response.send(JSON.stringify(returning_data))
->>>>>>> a966933223ecc95c1d101335df73de7249f03501
-        }, (error)=>{
+
+        }, (error) => {
             console.log(error);
         })
-    },(error)=>{
+    }, (error) => {
         console.log(error)
     })
-    
-    
+
+
     /*
     get_location(location).then((dictionary)=> {
         return get_weather(dictionary).then((weather)=>{
@@ -104,14 +91,14 @@ app.post('/', function(request, response) {
  * Appends list into search.json.
  * @param {array} list - writes a list object into a json file.
  */
-function write_file(list){
-        fs.writeFileSync("search.json", JSON.stringify(list)); 
+function write_file(list) {
+    fs.writeFileSync("search.json", JSON.stringify(list));
 };
 
 /**
  * reads a Json file and returns it into a string
  */
-function get_keys(){
+function get_keys() {
     file = fs.readFileSync("Apikeys.json")
     return JSON.parse(file)
 }
