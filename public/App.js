@@ -39,27 +39,33 @@ function geo() {
 }
 geo();
 /**
- * Functino that builds the map using latitude and longitude
+ * Function that builds the map using latitude and longitude
  * @param  {[type]} lati  used for latitude
  * @param  {[type]} longi used for longitude
  * @return {[type]}       [description]
  */
-function theMap(lat, long) {
 
-    var map = new google.maps.Map(document.getElementById('mapbox'), {
-        center: {
-            lat: parseFloat(lat),
-            lng: parseFloat(long)
-        },
-        zoom: 9,
-        draggable: false,
+
+function theMap(lati, longi) {
+
+   var map = new google.maps.Map(document.getElementById('mapbox'), {
+        center: {lat: lati, lng: longi},
+        zoom: 13,
+        draggable: true,
         fullscreenControl: false,
         streetViewControl: false,
         mapTypeControl: false,
-        zoomControl: false
+        zoomControl: true
     });
+    
+    var marker = new google.maps.Marker({
+    position: {lat: lati, lng: longi},
+    map: map,
+    });
+    
 }
 geo();
+
 
 /**
  * Ajax 
