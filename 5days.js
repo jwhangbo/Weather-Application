@@ -7,7 +7,7 @@ const request = require('request');
  * @param  {String} key      API Key used
  * @return {Dictionary}          Build up dictionary with all info needed.
  */
-function forecast5days(location, key) {
+ module.exports.forecast5days = function(location, key) {
     return new Promise  ((resolve, reject) => {
         var link = `https://api.worldweatheronline.com/premium/v1/weather.ashx?q=${location}&num_of_days=5&key=${key}&fx=yes&tp=24&format=json`
         request(
@@ -52,16 +52,8 @@ function forecast5days(location, key) {
 
                     resolve(html);
                 } else {
-                    reject("Error occured");
+                    reject(body);
                 }
             });
     });
 };
-
-
-
-
- forecast5days("Vancouver","5c64f9b43c864db9968204205180105").then((html)=>{
- 	console.log(html)}).catch(function(){
- 		console.log("Error occured")
- 	})

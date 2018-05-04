@@ -5,6 +5,7 @@ const fs = require('fs');
 
 const geo = require("./geolocation.js")
 const news = require("./news.js")
+const five_day = require("./5days.js")
 
 
 const keys = get_keys()
@@ -53,9 +54,15 @@ app.post('/', function(request, response) {
 
     geo.get_location(location, keys.geolocation).then((dictionary)=>{
         response.send(JSON.stringify(dictionary))
-
+        returning_data["location"] = dictionary
         return news.NewsHeading(location, keys.news).then((dictionary)=>{
-            console.log(dictionary);
+            returning_data["headlines"] = dictionary
+            return five_day.forecast5days(location, keys.worldweatheronline).then((dictionary)=>{
+                returning_data["weather"] = dictionary
+                response.send(returning_data)
+            }, (error)=>{
+                console.log(error);
+            })
         }, (error)=>{
             console.log(error);
         })

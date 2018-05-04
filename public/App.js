@@ -88,6 +88,7 @@ $(function(){
                 console.log('success');
                 var returned = JSON.parse(JSON.stringify(data))
                 returned = JSON.parse(data)
+                console.log(JSON.stringify(returned.length));
                 google.maps.event.addDomListener(window, 'load', theMap(returned['lat'],returned['long']));
             }
         })
