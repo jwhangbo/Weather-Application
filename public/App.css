@@ -110,11 +110,16 @@
     background: rgba(255,255,255,0.5);
 }
 
+.w_data {
+    position: relative;
+    vertical-align: middle;
+    display: inline-table;
+}
+
 #w_icon {
     position: relative;
     height: 100%;
     width: 60px ;
-    background-color: red;
 }
 
 body {

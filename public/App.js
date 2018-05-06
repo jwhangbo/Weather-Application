@@ -148,15 +148,8 @@ function load_news(dict) {
 }
 
 function load_weather(dict){
-<<<<<<< HEAD
-    console.log(dict)
-    for(i = 1; i < 6; i += 1) {   
-        document.getElementById("w_desc"+i).innerHTML = dict["Day "+i]["Description"];
-        document.getElementById("w_temp"+i).innerHTML = dict["Day "+i]["Temperature Max"];
-    }
-=======
     for(var i = 0; i<5; i++){
-        var day = i+1
+        var day = i + 1
         //var daydiv = document.getElementById("w_day" + day)
         var day_dict = dict["day"+day]
         document.getElementById("w_icon" + day).src = day_dict["icon"]
@@ -165,12 +158,11 @@ function load_weather(dict){
     }
     
     //document.getElementById("w_day1").innerHTML = JSON.stringify(dict["Day 1"]["Description"])
->>>>>>> eb65da8fa7fed18bcf244f1b6a8ef81de5814f0b
 }
 
 
 /** 
- * refreshs the map
+ * refreshes the map
  */
 
 sub = document.getElementById("sub")
