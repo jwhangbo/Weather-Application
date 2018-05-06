@@ -93,7 +93,6 @@ $(function() {
             success: function(data) {
                 console.log('success');
                 var returned = JSON.parse(JSON.stringify(data))
-                console.log(returned)
                 returned = JSON.parse(data)
                 google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'], returned.location['long']));
                 load_news(returned["headlines"])
@@ -150,11 +149,16 @@ function load_news(dict) {
 }
 
 function load_weather(dict){
-    document.getElementById("w_day1").innerHTML = dict["day 1"]
-    document.getElementById("w_day2").innerHTML = dict["day 2"]
-    document.getElementById("w_day3").innerHTML = dict["day 3"]
-    document.getElementById("w_day4").innerHTML = dict["day 4"]
-    document.getElementById("w_day5").innerHTML = dict["day 5"]    
+    for(var i = 0; i<5; i++){
+        var day = i+1
+        //var daydiv = document.getElementById("w_day" + day)
+        var day_dict = dict["day"+day]
+        document.getElementById("w_icon" + day).src = day_dict["icon"]
+        document.getElementById("w_summary" + day).innerHTML = day_dict["desc"]
+        document.getElementById("w_temp" + day).innerHTML = day_dict["mintemp"] + "°C ~ " + day_dict["maxtemp"] + "°C"
+    }
+    
+    //document.getElementById("w_day1").innerHTML = JSON.stringify(dict["Day 1"]["Description"])
 }
 
 
