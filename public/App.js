@@ -19,7 +19,7 @@ function geo() {
     var apiKey = "";
     var url = 'https://api.forecast.io/forecast/';
 
-    navigator.geolocation.getCurrentPosition(success, error);
+    //navigator.geolocation.getCurrentPosition(success, error);
     /**
      * success functions that returns the temp and summary from the forecast
      * @param  {int} position Stores coordinate location info
@@ -99,7 +99,6 @@ $(function(){
 })
 
 
-
 /**
  * Function that loads info that has been stored
  * @param  {Object} returned Grabs all the info stored to be re-displayed
@@ -129,11 +128,11 @@ function load_news(dict){
 }
 
 function load_weather(dict){
-    document.getElementById("w_day1").innerHTML = dict["day 1"]
-    document.getElementById("w_day2").innerHTML = dict["day 2"]
-    document.getElementById("w_day3").innerHTML = dict["day 3"]
-    document.getElementById("w_day4").innerHTML = dict["day 4"]
-    document.getElementById("w_day5").innerHTML = dict["day 5"]    
+    console.log(dict)
+    for(i = 1; i < 6; i += 1) {   
+        document.getElementById("w_desc"+i).innerHTML = dict["Day "+i]["Description"];
+        document.getElementById("w_temp"+i).innerHTML = dict["Day "+i]["Temperature Max"];
+    }
 }
 
 

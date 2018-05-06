@@ -103,18 +103,11 @@
     background: rgba(255,255,255,0.5);
 }
 
-#w_icon {
-    position: relative;
-    height: 100%;
-    width: 60px ;
-    background-color: red;
-}
-
 .w_days {
     position: relative;
     height: 15%;
-    background-color: blue;
     margin: 7px;
+    background: rgba(255,255,255,0.5);
 }
 
 #w_icon {
@@ -122,13 +115,6 @@
     height: 100%;
     width: 60px ;
     background-color: red;
-}
-
-.w_days {
-    position: relative;
-    height: 15%;
-    background-color: blue;
-    margin: 7px;
 }
 
 body {
