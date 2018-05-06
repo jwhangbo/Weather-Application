@@ -39,27 +39,33 @@ function geo() {
 }
 geo();
 /**
- * Functino that builds the map using latitude and longitude
+ * Function that builds the map using latitude and longitude
  * @param  {[type]} lati  used for latitude
  * @param  {[type]} longi used for longitude
  * @return {[type]}       [description]
  */
-function theMap(lat, long) {
 
-    var map = new google.maps.Map(document.getElementById('mapbox'), {
-        center: {
-            lat: parseFloat(lat),
-            lng: parseFloat(long)
-        },
-        zoom: 9,
-        draggable: false,
+
+function theMap(lati, longi) {
+
+   var map = new google.maps.Map(document.getElementById('mapbox'), {
+        center: {lat: lati, lng: longi},
+        zoom: 13,
+        draggable: true,
         fullscreenControl: false,
         streetViewControl: false,
         mapTypeControl: false,
-        zoomControl: false
+        zoomControl: true
     });
+    
+    var marker = new google.maps.Marker({
+    position: {lat: lati, lng: longi},
+    map: map,
+    });
+    
 }
 geo();
+
 
 /**
  * Ajax 
@@ -67,8 +73,8 @@ geo();
  * @param  {Objext} $.ajax Parses jason info
  * @return {Object} Parsed data from JSON file
  */
-$(function(){
-    $('#sub').click(function(e){
+$(function() {
+    $('#sub').click(function(e) {
         e.preventDefault();
         console.log('select_link clicked');
 
@@ -87,12 +93,10 @@ $(function(){
             success: function(data) {
                 console.log('success');
                 var returned = JSON.parse(JSON.stringify(data))
-                console.log(returned)
                 returned = JSON.parse(data)
-                google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'],returned.location['long']));
+                google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'], returned.location['long']));
+                load_news(returned["headlines"])
                 load_weather(returned.weather)
-                //load_news(returned["headlines"])
-
             }
         })
     })
@@ -103,7 +107,7 @@ $(function(){
  * Function that loads info that has been stored
  * @param  {Object} returned Grabs all the info stored to be re-displayed
  */
-function loadinfo(returned){ 
+function loadinfo(returned) {
     console.log(returned)
     document.getElementById("homeloc").innerHTML = "Current Location";
     document.getElementById("temp").innerHTML = returned.home["temperature"]
@@ -116,10 +120,26 @@ function loadinfo(returned){
     document.getElementById("lng").innerHTML = returned.requested["long"]
 }
 
-function load_news(dict){
-    console.log(dict)
-    
-    
+function load_news(dict) {
+    document.getElementById("title1").innerHTML = dict.dict_title[0]
+    document.getElementById("title2").innerHTML = dict.dict_title[1]
+    document.getElementById("title3").innerHTML = dict.dict_title[2]
+    document.getElementById("title4").innerHTML = dict.dict_title[3]
+    document.getElementById("title5").innerHTML = dict.dict_title[4]
+
+    document.getElementById("pic1").src = dict.dict_pic[0]
+    document.getElementById("pic2").src = dict.dict_pic[1]
+    document.getElementById("pic3").src = dict.dict_pic[2]
+    document.getElementById("pic4").src = dict.dict_pic[3]
+    document.getElementById("pic5").src = dict.dict_pic[4]
+
+    document.getElementById("title1").href = dict.dict_url[0]
+    document.getElementById("title2").href = dict.dict_url[1]
+    document.getElementById("title3").href = dict.dict_url[2]
+    document.getElementById("title4").href = dict.dict_url[3]
+    document.getElementById("title5").href = dict.dict_url[4]
+
+
     /*
     for(var i = 0; i <= dict["dict_title"].length;i++){
         console.log(dict[JSON.stringify(i)])
@@ -128,11 +148,24 @@ function load_news(dict){
 }
 
 function load_weather(dict){
+<<<<<<< HEAD
     console.log(dict)
     for(i = 1; i < 6; i += 1) {   
         document.getElementById("w_desc"+i).innerHTML = dict["Day "+i]["Description"];
         document.getElementById("w_temp"+i).innerHTML = dict["Day "+i]["Temperature Max"];
     }
+=======
+    for(var i = 0; i<5; i++){
+        var day = i+1
+        //var daydiv = document.getElementById("w_day" + day)
+        var day_dict = dict["day"+day]
+        document.getElementById("w_icon" + day).src = day_dict["icon"]
+        document.getElementById("w_summary" + day).innerHTML = day_dict["desc"]
+        document.getElementById("w_temp" + day).innerHTML = day_dict["mintemp"] + "°C ~ " + day_dict["maxtemp"] + "°C"
+    }
+    
+    //document.getElementById("w_day1").innerHTML = JSON.stringify(dict["Day 1"]["Description"])
+>>>>>>> eb65da8fa7fed18bcf244f1b6a8ef81de5814f0b
 }
 
 
@@ -141,7 +174,7 @@ function load_weather(dict){
  */
 
 sub = document.getElementById("sub")
-sub.addEventListener("click",function(){
+sub.addEventListener("click", function() {
     msg.innerHTML = ""
 })
 
@@ -154,13 +187,13 @@ function showSlides() {
     var slides = document.getElementsByClassName("mySlides");
     var dots = document.getElementsByClassName("dot");
     for (i = 0; i < slides.length; i++) {
-       slides[i].style.display = "none";  
+        slides[i].style.display = "none";
     }
     slideIndex++;
-    if (slideIndex > slides.length) {slideIndex = 1}    
+    if (slideIndex > slides.length) { slideIndex = 1 }
     for (i = 0; i < dots.length; i++) {
         dots[i].className = dots[i].className.replace(" active", "");
     }
-    slides[slideIndex-1].style.display = "block";
+    slides[slideIndex - 1].style.display = "block";
     setTimeout(showSlides, 2000); // Change image every 2 seconds
 }
