@@ -150,14 +150,11 @@ function load_news(dict) {
 function load_weather(dict){
     for(var i = 0; i<5; i++){
         var day = i + 1
-        //var daydiv = document.getElementById("w_day" + day)
         var day_dict = dict["day"+day]
         document.getElementById("w_icon" + day).src = day_dict["icon"]
         document.getElementById("w_summary" + day).innerHTML = day_dict["desc"]
         document.getElementById("w_temp" + day).innerHTML = day_dict["mintemp"] + "°C ~ " + day_dict["maxtemp"] + "°C"
     }
-    
-    //document.getElementById("w_day1").innerHTML = JSON.stringify(dict["Day 1"]["Description"])
 }
 
 
