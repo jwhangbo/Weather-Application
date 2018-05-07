@@ -34,6 +34,7 @@ function geo() {
      * error message
      */
     function error() {
+        msg = document.getElementById("msg");
         msg.innerHTML = "Unable to retrieve your location. Please turn on location.";
     }
 }
@@ -57,7 +58,7 @@ function theMap(lati, longi) {
         mapTypeControl: false,
         zoomControl: true
     });
-    
+
     var marker = new google.maps.Marker({
     position: {lat: lati, lng: longi},
     map: map,
@@ -184,5 +185,5 @@ function showSlides() {
         dots[i].className = dots[i].className.replace(" active", "");
     }
     slides[slideIndex - 1].style.display = "block";
-    setTimeout(showSlides, 2000); // Change image every 2 seconds
+    setTimeout(showSlides, 8000); // Change image every 2 seconds
 }
