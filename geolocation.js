@@ -13,12 +13,18 @@ module.exports.get_location = function(place, key) {
                 json: true
             },
             (err, resp, body) => {
-                if (body.status === "OK") {
-                    dict.location = place;
+                const types = body.results[0].address_components[0].types
+                if (body.status === "OK" && types.indexOf("locality")>= 0) {
+                    dict.location = (body.results[0].address_components[0].long_name)
                     dict.lat = (body.results[0].geometry["location"].lat);
                     dict.long = (body.results[0].geometry["location"].lng);
                     resolve(dict)
-                } else {
+                }
+                else if(types.indexOf('locality')== -1){
+                    dict["error"] = "Please select a city"
+                    reject(dict)
+                }
+                else {
                     reject(body.status)
                 }
             })

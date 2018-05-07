@@ -143,6 +143,12 @@ function load_news(dict) {
     document.getElementById("title3").href = dict.dict_url[2]
     document.getElementById("title4").href = dict.dict_url[3]
     document.getElementById("title5").href = dict.dict_url[4]
+    
+    document.getElementById("link1").href = dict.dict_url[0]
+    document.getElementById("link2").href = dict.dict_url[1]
+    document.getElementById("link3").href = dict.dict_url[2]
+    document.getElementById("link4").href = dict.dict_url[3]
+    document.getElementById("link5").href = dict.dict_url[4]
 
 
     /*
