@@ -9,7 +9,6 @@ module.exports.NewsHeading = function(city, key) {
     var dict_pic = {}
     var date_info = get_date()
     var link = `https://newsapi.org/v2/everything?sources=bbc-news&q=${city}${date_info}&apiKey=${key}`
-    console.log(link);
     return new Promise((resolve, reject) => {
         request({
             url: link,
