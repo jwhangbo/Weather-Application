@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Weather App</title>
+        <title>BCITour</title>
         <link href="App.css" type="text/css" rel="stylesheet"/>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
         <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
@@ -21,10 +21,10 @@
             width: 10%
         }
 
-        #slideItem {
+        .slideItem {
             position: relative;
-            width: 60%;
-            height: 40%;
+            width: 40%;
+            height: 50%;
         }
         </style>
     </head>
@@ -33,7 +33,7 @@
         <div class="w3-top header">
             <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
                 <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
-                <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4" id="sides"><i class="fa fa-home w3-margin-right"></i>Logo</a>
+                <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4" id="sides">BCITour</a>
                 <input type="text" id="Searchbox" class="w3-bar-item w3-padding-large w3-theme-d4 w3-theme-d4" placeholder="Search" name="City">
                 <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4" id="sub"><i class="fa fa-home w3-margin-right"></i>Submit</a>
             </div>
@@ -86,34 +86,35 @@
         <div id="news" class="w3-card">
             <h2 class="el-head">News</h2>
             <div id="slideshow">
-                <div class="mySlides fade">
-                    <div class="numbertext">1 / 5</div>
-                    <img id="pic1" src="img_nature_wide.jpg" style="width:80%">
+                <div id="myCard" class="mySlides fade">
+                    <img id="pic1" src="" class="slideItem">
                     <a id="title1" href="" target="_blank">First Thing</a>
+                    <div class="numbertext">1 / 5</div>
+                    <br>
                 </div>
 
-                <div class="mySlides fade">
-                    <div class="numbertext">2 / 5</div>
-                    <img id="pic2" src="img_fjords_wide.jpg" style="width:80%">
+                <div id="myCard" class="mySlides fade">
+                    <img id="pic2" src="" class="slideItem">
                     <a id="title2" href="" target="_blank">Second Thing</a>
+                    <div class="numbertext">2 / 5</div>
                 </div>
 
-                <div class="mySlides fade">
-                    <div class="numbertext">3 / 5</div>
-                    <img id="pic3" src="img_mountains_wide.jpg" style="width:80%">
+                <div id="myCard" class="mySlides fade">
+                    <img id="pic3" src="" class="slideItem">
                     <a id="title3" href="" target="_blank">Third Thing</a>
+                    <div class="numbertext">3 / 5</div>
                 </div>
 
-                <div class="mySlides fade">
-                    <div class="numbertext">4 / 5</div>
-                    <img id="pic4" src="img_mountains_wide.jpg" style="width:80%">
+                <div id="myCard" class="mySlides fade">
+                    <img id="pic4" src="" class="slideItem">
                     <a id="title4" href="" target="_blank">Forth Thing</a>
+                    <div class="numbertext">4 / 5</div>
                 </div>
 
-                <div class="mySlides fade">
-                    <div class="numbertext">5 / 5</div>
-                    <img id="pic5" src="img_mountains_wide.jpg" style="width:80%">
+                <div id="myCard" class="mySlides fade">
+                    <img id="pic5" src="" class="slideItem">
                     <a id="title5" href="" target="_blank">Fifth Thing</a>
+                    <div class="numbertext">5 / 5</div>
                 </div>
             </div>
         </div>
