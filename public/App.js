@@ -4,6 +4,10 @@
  */
 
 
+/* VARS */
+
+var monthList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+var dayList = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat']
 
 /** 
  * geo weather
@@ -150,11 +154,15 @@ function load_news(dict) {
 
 function load_weather(dict){
     for(var i = 0; i<5; i++){
-        var day = i + 1
-        var day_dict = dict["day"+day]
+        var day = i + 1,
+            w_month = new Date(),
+            w_date = new Date(),
+            w_day = new Date(),
+            day_dict = dict["day"+day];
         document.getElementById("w_icon" + day).src = day_dict["icon"]
         document.getElementById("w_summary" + day).innerHTML = day_dict["desc"]
         document.getElementById("w_temp" + day).innerHTML = day_dict["mintemp"] + "°C ~ " + day_dict["maxtemp"] + "°C"
+        document.getElementById("w_date" + day).innerHTML = dayList[w_day.getDay() + day-1] + ", "+ monthList[w_month.getMonth()] + " " + (w_date.getDate() + day-1)
     }
 }
 
