@@ -26,3 +26,5 @@ function get_weather(info, key){
     })
     })
 }
+
+module.exports = get_weather();
