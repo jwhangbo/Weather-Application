@@ -4,7 +4,7 @@ const request = require('request')
  * Finds the location using Google Maps API.
  * @param {string} place - represents the coordinates of a location.
  */
-get_location = function(place, key) {
+module.exports.get_location = function(place, key) {
     var dict = {}
     var link = `https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=${key}`
     return new Promise((resolve, reject) => {
@@ -24,5 +24,3 @@ get_location = function(place, key) {
             })
     })
 }
-
-module.exports = get_location;
