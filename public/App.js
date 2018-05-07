@@ -19,7 +19,7 @@ function geo() {
     var apiKey = "";
     var url = 'https://api.forecast.io/forecast/';
 
-    navigator.geolocation.getCurrentPosition(success, error);
+    //navigator.geolocation.getCurrentPosition(success, error);
     /**
      * success functions that returns the temp and summary from the forecast
      * @param  {int} position Stores coordinate location info
@@ -103,7 +103,6 @@ $(function() {
 })
 
 
-
 /**
  * Function that loads info that has been stored
  * @param  {Object} returned Grabs all the info stored to be re-displayed
@@ -150,7 +149,7 @@ function load_news(dict) {
 
 function load_weather(dict){
     for(var i = 0; i<5; i++){
-        var day = i+1
+        var day = i + 1
         //var daydiv = document.getElementById("w_day" + day)
         var day_dict = dict["day"+day]
         document.getElementById("w_icon" + day).src = day_dict["icon"]
@@ -163,7 +162,7 @@ function load_weather(dict){
 
 
 /** 
- * refreshs the map
+ * refreshes the map
  */
 
 sub = document.getElementById("sub")
