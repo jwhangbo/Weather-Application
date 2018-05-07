@@ -6,7 +6,7 @@ const request = require('request');
  * @param  {String} key      API Key used
  * @return {Dictionary}          Build up dictionary with all info needed.
  */
-forecast5days = function(location, key){
+module.exports.forecast5days = function(location, key){
     var dict = {}
     var link = `https://api.worldweatheronline.com/premium/v1/weather.ashx?q=${location}&num_of_days=5&key=${key}&fx=yes&tp=24&format=json`
     return new Promise ((resolve, reject)=>{
@@ -35,5 +35,3 @@ forecast5days = function(location, key){
     })
     })
 }
-
-module.exports = forecast5days;
