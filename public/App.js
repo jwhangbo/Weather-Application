@@ -34,6 +34,7 @@ function geo() {
      * error message
      */
     function error() {
+        msg = document.getElementById("msg");
         msg.innerHTML = "Unable to retrieve your location. Please turn on location.";
     }
 }
@@ -57,7 +58,7 @@ function theMap(lati, longi) {
         mapTypeControl: false,
         zoomControl: true
     });
-    
+
     var marker = new google.maps.Marker({
     position: {lat: lati, lng: longi},
     map: map,
@@ -150,14 +151,11 @@ function load_news(dict) {
 function load_weather(dict){
     for(var i = 0; i<5; i++){
         var day = i + 1
-        //var daydiv = document.getElementById("w_day" + day)
         var day_dict = dict["day"+day]
         document.getElementById("w_icon" + day).src = day_dict["icon"]
         document.getElementById("w_summary" + day).innerHTML = day_dict["desc"]
         document.getElementById("w_temp" + day).innerHTML = day_dict["mintemp"] + "°C ~ " + day_dict["maxtemp"] + "°C"
     }
-    
-    //document.getElementById("w_day1").innerHTML = JSON.stringify(dict["Day 1"]["Description"])
 }
 
 
@@ -187,5 +185,5 @@ function showSlides() {
         dots[i].className = dots[i].className.replace(" active", "");
     }
     slides[slideIndex - 1].style.display = "block";
-    setTimeout(showSlides, 2000); // Change image every 2 seconds
+    setTimeout(showSlides, 8000); // Change image every 2 seconds
 }
