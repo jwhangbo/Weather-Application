@@ -1,19 +1,56 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Weather App</title>
+        <title>BCITour</title>
         <link href="App.css" type="text/css" rel="stylesheet"/>
         <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+        <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
+        <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+        <style>
+        html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
+        #Searchbox {
+            width: 80%;
+        }
+
+        #sides {
+            width: 10%
+        }
+
+        #sub {
+            width: 10%
+        }
+
+    /*
+        .slideItem {
+            position: relative;
+            width: 40%;
+            height: 50%;
+        }*/
+
+        #myCard {
+            position: relative;
+            margin: auto;
+            background: rgba(255,255,255,0.5);
+            height: 70%;
+        }
+
+        </style>
     </head>
     <body>
-        <header id="header">
-            <img id="logo" src="https://android.giveawayoftheday.com/wp-content/plugins/gotd_googleplay_plugin/images/2018/01/com.rainystudio.pixelnougaticonpack_app_icon_1516009340.png">
-            <input id="Searchbox" placeholder="Search" autocomplete="on" name="City">
-            <button id="sub">Submit</button>
-            <button id="sub">Settings</button>
-            <div id="msg"></div>
-        </header>
-    
+        <!-- Navbar -->
+        <div class="w3-top header">
+            <div class="w3-bar w3-theme-d2 w3-left-align w3-large">
+                <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
+                <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4" id="sides">BCITour</a>
+                <input type="text" id="Searchbox" class="w3-bar-item w3-padding-large w3-theme-d4 w3-theme-d4" placeholder="Search" name="City">
+                <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4" id="sub"><i class="fa fa-home w3-margin-right"></i>Submit</a>
+            </div>
+        </div>
+
+        <!--move this to be behind the map and animated when error occurs-->
+        <div id="msg"></div>
+
         <div id="mapbox" class="w3-card"></div>
        
         <div id="home"  class="w3-card">
@@ -68,34 +105,34 @@
         <div id="news" class="w3-card">
             <h2 class="el-head">News</h2>
             <div id="slideshow">
-                <div class="mySlides fade">
-                    <div class="numbertext">1 / 5</div>
-                    <img id="pic1" src="img_nature_wide.jpg" style="width:80%">
+                <div id="myCard" class="mySlides fade">
+                    <img id="pic1" src="" class="slideItem">
                     <a id="title1" href="" target="_blank">First Thing</a>
+                    <div class="numbertext">1 / 5</div>
                 </div>
 
-                <div class="mySlides fade">
-                    <div class="numbertext">2 / 5</div>
-                    <img id="pic2" src="img_fjords_wide.jpg" style="width:80%">
+                <div id="myCard" class="mySlides fade">
+                    <img id="pic2" src="" class="slideItem">
                     <a id="title2" href="" target="_blank">Second Thing</a>
+                    <div class="numbertext">2 / 5</div>
                 </div>
 
-                <div class="mySlides fade">
-                    <div class="numbertext">3 / 5</div>
-                    <img id="pic3" src="img_mountains_wide.jpg" style="width:80%">
+                <div id="myCard" class="mySlides fade">
+                    <img id="pic3" src="" class="slideItem">
                     <a id="title3" href="" target="_blank">Third Thing</a>
+                    <div class="numbertext">3 / 5</div>
                 </div>
 
-                <div class="mySlides fade">
-                    <div class="numbertext">4 / 5</div>
-                    <img id="pic4" src="img_mountains_wide.jpg" style="width:80%">
+                <div id="myCard" class="mySlides fade">
+                    <img id="pic4" src="" class="slideItem">
                     <a id="title4" href="" target="_blank">Forth Thing</a>
+                    <div class="numbertext">4 / 5</div>
                 </div>
 
-                <div class="mySlides fade">
-                    <div class="numbertext">5 / 5</div>
-                    <img id="pic5" src="img_mountains_wide.jpg" style="width:80%">
+                <div id="myCard" class="mySlides fade">
+                    <img id="pic5" src="" class="slideItem">
                     <a id="title5" href="" target="_blank">Fifth Thing</a>
+                    <div class="numbertext">5 / 5</div>
                 </div>
             </div>
         </div>
