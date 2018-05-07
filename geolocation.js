@@ -7,7 +7,6 @@ const request = require('request')
 module.exports.get_location = function(place, key) {
     var dict = {}
     var link = `https://maps.googleapis.com/maps/api/geocode/json?address=${place}&key=${key}`
-    console.log(link)
     return new Promise((resolve, reject) => {
         request({
                 url: link,
