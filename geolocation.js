@@ -23,5 +23,4 @@ module.exports.get_location = function(place, key) {
                 }
             })
     })
-
 }

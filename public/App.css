@@ -6,7 +6,7 @@
 #mapbox{
     position: absolute;
     top: 15%;
-    left: 30px;
+    left: 2.5%;
     width: 65%;
     height: 55%;
     z-index: 1;
@@ -36,7 +36,7 @@
 #weather {
     position: absolute;
     top: 75%;
-    left: 30px;
+    left: 2.5%;
     width: 25%;
     height: 55%;
     z-index: 1;
@@ -55,37 +55,71 @@
     text-align: center;
 }
 
-#Searchbox {
+
+#Searchbox, #sub {
+    top: 0;
     position: relative;
-    height: 60px;
-    font-size: 50px;
+    height: 30px;
+    vertical-align:middle;
+    display: inline-block;
+}
+
+#Searchbox {
+    top: -1px;
+    width: 80%;
 }
 #sub {
+    top: -1.5px;
+}
+
+#slideshow {
+    max-width: 1000px;
     position: relative;
-    height: 60px;
-    font-size: 40px;
+    margin: auto;
+    background: rgba(255,255,255,0.5);
+    left: 0;
+    right: 0;
+    width: 90%;
+    text-align: center;
+}
+
+#logo {
+    position: relative;
+    height: 40px;
+    font-size: 32px;
+    vertical-align:middle;
+    display: inline-block;
+    margin: 10px 0;
+    width: 40px;
 }
 
 #header {
     position: fixed;
     left: 0;
+    text-align: center;
     top: 0;
     width: 100%;
     z-index: 100;
+    background: rgba(255,255,255,0.5);
+}
+
+.w_days {
+    position: relative;
+    height: 15%;
+    margin: 7px;
+    background: rgba(255,255,255,0.5);
+}
+
+.w_data {
+    position: relative;
+    vertical-align: middle;
+    display: inline-table;
 }
 
 #w_icon {
     position: relative;
     height: 100%;
     width: 60px ;
-    background-color: red;
-}
-
-.w_days {
-    position: relative;
-    height: 15%;
-    background-color: blue;
-    margin: 7px;
 }
 
 body {

@@ -7,7 +7,8 @@ const request = require("request");
 module.exports.NewsHeading = function(city, key) {
     var dict_title = {}
     var dict_url = {}
-    var link = `https://newsapi.org/v2/top-headlines?q=${city}&apiKey=${key}`
+    var dict_pic = {}
+    var link = `https://newsapi.org/v2/everything?sources=bbc-news&q=${city}&apiKey=${key}`
     return new Promise((resolve, reject) => {
         request({
             url: link,
@@ -15,13 +16,23 @@ module.exports.NewsHeading = function(city, key) {
         }, (error, response, body) => {
             temp = 0
             if (!("ok" in body)) {
-                for (var i = 0; i < body.articles.length; i++) {
-                    dict_title[i] = body.articles[temp].title
-                    dict_url[i] = body.articles[temp].url
-                    temp += 1
+                if (body.articles.length > 5) {
+                    for (var i = 0; i < 5; i++) {
+                        dict_title[i] = body.articles[temp].title
+                        dict_url[i] = body.articles[temp].url
+                        dict_pic[i] = body.articles[temp].urlToImage
+                        temp += 1
+                    }
+                } else {
+                    for (var i = 0; i < body.articles.length; i++) {
+                        dict_title[i] = body.articles[temp].title
+                        dict_url[i] = body.articles[temp].url
+                        dict_pic[i] = body.articles[temp].urlToImage
+                        temp += 1
+                    }
                 }
-            resolve({dict_title, dict_url})
             }
+            resolve({dict_title, dict_url, dict_pic})
         })
     })
 }
