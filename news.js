@@ -3,7 +3,7 @@ const request = require("request");
  * Gets top news about the location using the News API.
  * @param {string} city - city in with news is about.
  */
-module.exports.NewsHeading = function(city, key) {
+NewsHeading = function(city, key) {
     var dict_title = {}
     var dict_url = {}
     var dict_pic = {}
@@ -52,4 +52,9 @@ function get_date(){
     else {
         return `&from=${curryear}-${prevmonth}-1&to=${curryear}-${currmonth}-${currday}`
     }
+}
+
+module.exports = {
+    NewsHeading,
+    get_date
 }
