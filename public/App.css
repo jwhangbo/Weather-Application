@@ -125,3 +125,18 @@
 body {
     background-color: lightpink;
 }
+
+.newstitles {
+    position: absolute;
+    font-size: 30px;
+    left: 2%;
+    color: violet;
+}
+
+.newspic {
+    position: absolute;
+    left: 10%;
+    top: 20%;
+    width: 50%;
+    height: auto;
+}
