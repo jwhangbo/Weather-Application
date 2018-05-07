@@ -52,7 +52,6 @@ app.post('/', function(request, response) {
     var returning_data = {}
     var location = request.body["location"]
     geo.get_location(location, keys.geolocation).then((dictionary) => {
-        console.log(dictionary)
         returning_data["location"] = dictionary
         return news.NewsHeading(location, keys.news).then((dictionary) => {
             returning_data["headlines"] = dictionary
