@@ -52,14 +52,11 @@ app.post('/', function(request, response) {
     var returning_data = {}
     var location = request.body["location"]
     geo.get_location(location, keys.geolocation).then((dictionary) => {
-        //response.send(JSON.stringify(dictionary))
         returning_data["location"] = dictionary
         return news.NewsHeading(location, keys.news).then((dictionary) => {
             returning_data["headlines"] = dictionary
-            //response.send(JSON.stringify(returning_data))
             return forecast.forecast5days(returning_data.location["location"], keys.worldweatheronline).then((dictionary)=>{
                 returning_data["weather"]=dictionary
-                console.log(returning_data)
                 response.send(JSON.stringify(returning_data))
             },(error)=>{
                 console.log(error)
@@ -70,26 +67,6 @@ app.post('/', function(request, response) {
     }, (error) => {
         console.log(error)
     })
-
-
-    /*
-    get_location(location).then((dictionary)=> {
-        return get_weather(dictionary).then((weather)=>{
-            returning_data["requested"] = weather
-            return get_weather(home).then((weather)=>{
-                returning_data["home"] = weather
-                console.log(returning_data)
-                response.send(JSON.stringify(returning_data))
-            }, (error) => {
-                console.log(error)
-            })
-        }, (error)=> {
-            console.log(error)
-        })
-    }, (error)=> {
-        console.log(error)
-    })
-    */
 })
 
 /**

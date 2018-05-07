@@ -64,32 +64,44 @@
     text-align: center;
 }
 
-#w_icon {
+
+#logo {
     position: relative;
-    height: 100%;
-    width: 60px ;
-    background-color: red;
+    height: 40px;
+    font-size: 32px;
+    vertical-align:middle;
+    display: inline-block;
+    margin: 10px 0;
+    width: 40px;
+}
+
+#header {
+    position: fixed;
+    left: 0;
+    text-align: center;
+    top: 0;
+    width: 100%;
+    z-index: 100;
+    background: rgba(255,255,255,0.5);
 }
 
 .w_days {
     position: relative;
     height: 15%;
-    background-color: blue;
     margin: 7px;
+    background: rgba(255,255,255,0.5);
+}
+
+.w_data {
+    position: relative;
+    vertical-align: middle;
+    display: inline-table;
 }
 
 #w_icon {
     position: relative;
     height: 100%;
     width: 60px ;
-    background-color: red;
-}
-
-.w_days {
-    position: relative;
-    height: 15%;
-    background-color: blue;
-    margin: 7px;
 }
 
 body {
