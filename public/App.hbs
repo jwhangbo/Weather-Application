@@ -7,29 +7,6 @@
         <link rel="stylesheet" href="https://www.w3schools.com/lib/w3-theme-blue-grey.css">
         <link rel='stylesheet' href='https://fonts.googleapis.com/css?family=Open+Sans'>
         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-        <style>
-        html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
-        #Searchbox {
-            width: 80%;
-        }
-
-        #sides {
-            width: 10%
-        }
-
-        #sub {
-            width: 10%
-        }
-
-    /*
-        .slideItem {
-            position: relative;
-            width: 40%;
-            height: 50%;
-        }*/
-
-
-        </style>
     </head>
     <body>
         <!-- Navbar -->
@@ -38,7 +15,23 @@
                 <a class="w3-bar-item w3-button w3-hide-medium w3-hide-large w3-right w3-padding-large w3-hover-white w3-large w3-theme-d2" href="javascript:void(0);" onclick="openNav()"><i class="fa fa-bars"></i></a>
                 <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4" id="sides">BCITour</a>
                 <input type="text" id="Searchbox" class="w3-bar-item w3-padding-large w3-theme-d4 w3-theme-d4" placeholder="Search" name="City">
-                <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4" id="sub">Submit</a>
+                <div id="mapOptions" class="w3-bar-item w3-button w3-padding-large w3-theme-d4">
+                    <button class="dropButton">⯆</button>
+                    <div class="mapOptions-content">
+                        <form>
+                            <input type="radio" name="place" value="zoo">Amusement Park<br>
+                            <input type="radio" name="place" value="zoo">Aquarium<br>
+                            <input type="radio" name="place" value="zoo">Art Gallery<br>
+                            <input type="radio" name="place" value="zoo">Casino<br>
+                            <input type="radio" name="place" value="zoo">Museum<br>
+                            <input type="radio" name="place" value="zoo">Night Club<br>
+                            <input type="radio" name="place" value="zoo">Park<br>
+                            <input type="radio" name="place" value="zoo">Shopping Mall<br>
+                            <input type="radio" name="place" value="zoo">Zoo<br>
+                        </form>
+                    </div>
+                </div>
+                <a href="#" class="w3-bar-item w3-button w3-padding-large w3-theme-d4" id="sub">⌕ Search</a>
             </div>
         </div>
 
@@ -98,13 +91,14 @@
 
         <div id="news" class="w3-card">
             <h2 class="el-head">News</h2>
+
             <div id="slideshow">
                 <div id="myCard" class="mySlides fade">
                     <div class="titles" style="display:inline-block">
                         <a id="title1" href="" target="_blank">First Thing</a>
                     </div>
                     <div style="display:inline-block">
-                        <img id="pic1" src="" class="slideItem">
+                        <a href="" id="link1" target="_blank"><img id="pic1" src="" class="slideItem"></a>
                         <div class="numbertext">1 / 5</div>
                     </div>
                 </div>
@@ -114,7 +108,7 @@
                         <a id="title2" href="" target="_blank">Second Thing</a>
                     </div>
                     <div style="display:inline-block">
-                        <img id="pic2" src="" class="slideItem">
+                        <a href="" id="link2" target="_blank"><img id="pic2" src="" class="slideItem"></a>
                         <div class="numbertext">2 / 5</div>
                     </div>
                 </div>
@@ -124,7 +118,7 @@
                         <a id="title3" href="" target="_blank">Third Thing</a>
                     </div>
                     <div style="display:inline-block">
-                        <img id="pic3" src="" class="slideItem">
+                        <a href="" id="link3" target="_blank"><img id="pic3" src="" class="slideItem"></a>
                         <div class="numbertext">3 / 5</div>
                     </div>
                 </div>
@@ -134,7 +128,7 @@
                         <a id="title4" href="" target="_blank">Forth Thing</a>
                     </div>
                     <div style="display:inline-block">
-                        <img id="pic4" src="" class="slideItem">
+                        <a href="" id="link4" target="_blank"><img id="pic4" src="" class="slideItem"></a>
                         <div class="numbertext">4 / 5</div>
                     </div>
                 </div>
@@ -144,7 +138,7 @@
                         <a id="title5" href="" target="_blank">Fifth Thing</a>
                     </div>
                     <div style="display:inline-block">
-                        <img id="pic5" src="" class="slideItem">
+                        <a href="" id="link5" target="_blank"><img id="pic5" src="" class="slideItem"></a>
                         <div class="numbertext">5 / 5</div>
                     </div>
                 </div>

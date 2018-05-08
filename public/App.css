@@ -136,3 +136,41 @@ body {
     background: rgba(255,255,255,0.5);
     height: 85%;
 }
+
+html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
+        
+#Searchbox {
+    width: 75%;
+}
+
+#sides {
+    width: 10%
+}
+
+#sub {
+    width: 10%
+}
+
+#mapOptions {
+    width: 5%;
+}
+
+.dropButton {
+    background-color: rgba(0,0,0,0);
+    font-size: 18px;
+    border: none;
+}
+
+.mapOptions-content {
+    display: none;
+    position: absolute;
+    text-align: left;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+#mapOptions:hover .mapOptions-content {
+    display: block;
+}
