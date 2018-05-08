@@ -3,13 +3,12 @@ const request = require("request");
  * Gets top news about the location using the News API.
  * @param {string} city - city in with news is about.
  */
-NewsHeading = function(city, key) {
+module.exports.NewsHeading = function(city, key) {
     var dict_title = {}
     var dict_url = {}
     var dict_pic = {}
     var date_info = get_date()
     var link = `https://newsapi.org/v2/everything?sources=bbc-news&q=${city}${date_info}&apiKey=${key}`
-    console.log(link);
     return new Promise((resolve, reject) => {
         request({
             url: link,
@@ -52,9 +51,4 @@ function get_date(){
     else {
         return `&from=${curryear}-${prevmonth}-1&to=${curryear}-${currmonth}-${currday}`
     }
-}
-
-module.exports = {
-    NewsHeading,
-    get_date
 }
