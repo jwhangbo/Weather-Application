@@ -88,9 +88,28 @@ $(function() {
          * @type {Object}
          */
         var search = {}
-        search.location = $('#Searchbox').val();
+        search.location = $('#Searchbox').val();      
+        ajax(search)  
+    })
 
-        $.ajax({
+    $('#Searchbox').keypress(function(e) {
+        if(e.which == 13) {
+            e.preventDefault();
+            console.log('select_link clicked');
+
+            /**
+             * Gets value from searchbox to search for location
+             * @type {Object}
+             */
+            var search = {}
+            search.location = $('#Searchbox').val(); 
+            ajax(search)  
+        }     
+    })
+})
+
+function ajax(search){
+    $.ajax({
             type: 'POST',
             data: JSON.stringify(search),
             contentType: 'application/json',
@@ -99,15 +118,16 @@ $(function() {
                 console.log('success');
                 var returned = JSON.parse(JSON.stringify(data))
                 returned = JSON.parse(data)
-                google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'], returned.location['long']));
-                load_news(returned["headlines"])
-                load_weather(returned.weather)
+                if (returned["error"] === "None"){
+                    google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'], returned.location['long']));
+                    load_news(returned["headlines"])
+                    load_weather(returned.weather)
+                } else {
+                    alert(returned["error"])
+                }
             }
-        })
     })
-})
-
-
+}
 /**
  * Function that loads info that has been stored
  * @param  {Object} returned Grabs all the info stored to be re-displayed
