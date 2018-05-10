@@ -67,6 +67,25 @@ function theMap(lati, longi) {
     position: {lat: lati, lng: longi},
     map: map,
     });
+
+    //temp marker 1
+    var marker = new google.maps.Marker({
+    position: {lat: 51.5040727, lng: -0.1784748},
+    map: map,
+    });
+
+    //temp marker 2
+    var marker = new google.maps.Marker({
+    position: {lat: 51.4880927, lng: -0.1383774},
+    map: map,
+    });
+
+    //temp marker 3
+    var marker = new google.maps.Marker({
+    position: {lat: 51.4937705, lng: -0.1098964},
+    map: map,
+    });
+
     
 }
 geo();
