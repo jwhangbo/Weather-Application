@@ -7,6 +7,7 @@ const geo = require("./geolocation.js")
 const news = require("./news.js")
 
 const forecast = require("./5days.js")
+const pixabay = require("./pixabay.js")
 
 const keys = get_keys()
 /**
@@ -33,9 +34,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(__dirname + '/public'));
 
 
-
-
-
 /**
  * Variable used to store /public/ directory
  * @type {[type]}
@@ -54,17 +52,22 @@ app.post('/', function(request, response) {
     console.log(location)
     geo.get_location(location, keys.geolocation).then((dictionary) => {
         returning_data["location"] = dictionary
-        return news.NewsHeading(location, keys.news).then((dictionary) => {
-            returning_data["headlines"] = dictionary
-            return forecast.forecast5days(returning_data.location["location"], keys.worldweatheronline).then((dictionary)=>{
-                returning_data["weather"]=dictionary
-                returning_data["error"]="None"
-                response.send(JSON.stringify(returning_data))
-            },(error)=>{
-                console.log(error)
+        return pixabay.city_background(location, keys.pixabay).then((dictionary) => {
+            returning_data["background"] = dictionary
+            return news.NewsHeading(location, keys.news).then((dictionary) => {
+                returning_data["headlines"] = dictionary
+                return forecast.forecast5days(returning_data.location["location"], keys.worldweatheronline).then((dictionary)=>{
+                    returning_data["weather"]=dictionary
+                    returning_data["error"]="None"
+                    response.send(JSON.stringify(returning_data))
+                },(error)=>{
+                    console.log(error)
+                })
+            }, (error)=>{
+                console.log(error);
             })
         }, (error)=>{
-            console.log(error);
+                console.log(error);
         })
     }, (error) => {
         response.send(JSON.stringify(error))

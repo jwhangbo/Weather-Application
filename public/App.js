@@ -43,14 +43,14 @@ function geo() {
     }
 }
 geo();
+
+
 /**
  * Function that builds the map using latitude and longitude
  * @param  {[type]} lati  used for latitude
  * @param  {[type]} longi used for longitude
  * @return {[type]}       [description]
  */
-
-
 function theMap(lati, longi) {
 
    var map = new google.maps.Map(document.getElementById('mapbox'), {
@@ -122,6 +122,7 @@ function ajax(search){
                     google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'], returned.location['long']));
                     load_news(returned["headlines"])
                     load_weather(returned.weather)
+                    load_bg(returned["background"])
                 } else {
                     alert(returned["error"])
                 }
@@ -143,6 +144,11 @@ function loadinfo(returned) {
     document.getElementById("weather").innerHTML = returned.requested["summary"]
     document.getElementById("lat").innerHTML = returned.requested["lat"]
     document.getElementById("lng").innerHTML = returned.requested["long"]
+
+}
+
+function load_bg(background) {
+    document.body.style.backgroundImage = "url("+background+")";
 }
 
 function load_news(dict) {
