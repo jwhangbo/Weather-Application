@@ -38,7 +38,7 @@
     top: 75%;
     left: 2.5%;
     width: 25%;
-    height: 55%;
+    height: 70%;
     z-index: 0;
 }
 
@@ -47,7 +47,7 @@
     top: 75%;
     left: 30%;
     width: 67.5%;
-    height: 55%;
+    height: 80%;
     z-index: 0;
 }
 
@@ -116,9 +116,62 @@ body {
 }
 
 #title1, #title2, #title3, #title4, #title5 {
-    font-size: 20px;
+    position: relative;
+    font-size: 30px;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+.titles {
+    word-wrap: break-word;
 }
 
 #pic1, #pic2, #pic3, #pic4, #pic5 {
-    width: 50%;
+    width: 50vw;
+    float: left;
+}
+
+#myCard {
+    position: relative;
+    margin: auto;
+    background: rgba(255,255,255,0.5);
+    height: 85%;
+}
+
+html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
+        
+#Searchbox {
+    width: 75%;
+}
+
+#sides {
+    width: 10%
+}
+
+#sub {
+    width: 10%
+}
+
+#mapOptions {
+    width: 5%;
+}
+
+.dropButton {
+    background-color: rgba(0,0,0,0);
+    font-size: 18px;
+    border: none;
+}
+
+.mapOptions-content {
+    display: none;
+    position: absolute;
+    text-align: left;
+    background-color: #f1f1f1;
+    min-width: 160px;
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+#mapOptions:hover .mapOptions-content {
+    display: block;
 }

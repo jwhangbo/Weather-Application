@@ -4,6 +4,10 @@
  */
 
 
+/* VARS */
+
+var monthList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+var dayList = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat']
 
 /** 
  * geo weather
@@ -84,9 +88,28 @@ $(function() {
          * @type {Object}
          */
         var search = {}
-        search.location = $('#Searchbox').val();
+        search.location = $('#Searchbox').val();      
+        ajax(search)  
+    })
 
-        $.ajax({
+    $('#Searchbox').keypress(function(e) {
+        if(e.which == 13) {
+            e.preventDefault();
+            console.log('select_link clicked');
+
+            /**
+             * Gets value from searchbox to search for location
+             * @type {Object}
+             */
+            var search = {}
+            search.location = $('#Searchbox').val(); 
+            ajax(search)  
+        }     
+    })
+})
+
+function ajax(search){
+    $.ajax({
             type: 'POST',
             data: JSON.stringify(search),
             contentType: 'application/json',
@@ -95,16 +118,17 @@ $(function() {
                 console.log('success');
                 var returned = JSON.parse(JSON.stringify(data))
                 returned = JSON.parse(data)
-                google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'], returned.location['long']));
-                load_news(returned["headlines"])
-                load_weather(returned.weather)
-                load_bg(returned["background"])
+                if (returned["error"] === "None"){
+                    google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'], returned.location['long']));
+                    load_news(returned["headlines"])
+                    load_weather(returned.weather)
+                    load_bg(returned["background"])
+                } else {
+                    alert(returned["error"])
+                }
             }
-        })
     })
-})
-
-
+}
 /**
  * Function that loads info that has been stored
  * @param  {Object} returned Grabs all the info stored to be re-displayed
@@ -162,11 +186,15 @@ function load_news(dict) {
 
 function load_weather(dict){
     for(var i = 0; i<5; i++){
-        var day = i + 1
-        var day_dict = dict["day"+day]
+        var day = i + 1,
+            w_month = new Date(),
+            w_date = new Date(),
+            w_day = new Date(),
+            day_dict = dict["day"+day];
         document.getElementById("w_icon" + day).src = day_dict["icon"]
         document.getElementById("w_summary" + day).innerHTML = day_dict["desc"]
         document.getElementById("w_temp" + day).innerHTML = day_dict["mintemp"] + "°C ~ " + day_dict["maxtemp"] + "°C"
+        document.getElementById("w_date" + day).innerHTML = dayList[w_day.getDay() + day-1] + ", "+ monthList[w_month.getMonth()] + " " + (w_date.getDate() + day-1)
     }
 }
 
@@ -198,4 +226,37 @@ function showSlides() {
     }
     slides[slideIndex - 1].style.display = "block";
     setTimeout(showSlides, 8000); // Change image every 2 seconds
+}
+
+function get_radial(){
+    if (document.getElementById("AP").checked == true){
+        return("amusement_park")
+    }
+    else if (document.getElementById("AQ").checked == true){
+        return("aquarium")
+    }
+    else if (document.getElementById("AG").checked == true){
+        return("art_gallery")
+    }
+    else if (document.getElementById("CAS").checked == true){
+        return("casino")
+    }
+    else if (document.getElementById("MM").checked == true){
+        return("museum")
+    }
+    else if (document.getElementById("NC").checked == true){
+        return("night_club")
+    }
+    else if (document.getElementById("Park").checked == true){
+        return("park")
+    }
+    else if (document.getElementById("SM").checked == true){
+        return("shopping_mall")
+    }
+    else if (document.getElementById("Zoo").checked == true){
+        return("zoo")
+    }
+    else if (document.getElementById("res").checked == true){
+        return("restraunt")
+    }
 }
