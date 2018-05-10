@@ -51,12 +51,14 @@ app.get('/', (request, response) => {
 app.post('/', function(request, response) {
     var returning_data = {}
     var location = request.body["location"]
+    console.log(location)
     geo.get_location(location, keys.geolocation).then((dictionary) => {
         returning_data["location"] = dictionary
         return news.NewsHeading(location, keys.news).then((dictionary) => {
             returning_data["headlines"] = dictionary
             return forecast.forecast5days(returning_data.location["location"], keys.worldweatheronline).then((dictionary)=>{
                 returning_data["weather"]=dictionary
+                returning_data["error"]="None"
                 response.send(JSON.stringify(returning_data))
             },(error)=>{
                 console.log(error)
@@ -65,7 +67,7 @@ app.post('/', function(request, response) {
             console.log(error);
         })
     }, (error) => {
-        console.log(error)
+        response.send(JSON.stringify(error))
     })
 })
 
