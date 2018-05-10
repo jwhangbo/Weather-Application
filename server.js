@@ -8,6 +8,7 @@ const news = require("./news.js")
 
 const forecast = require("./5days.js")
 const pixabay = require("./pixabay.js")
+const places = require("./attract.js")
 
 const keys = get_keys()
 /**
@@ -45,14 +46,16 @@ app.get('/', (request, response) => {
         "apikey": keys.googlemaps
     });
 });
-
+//
 app.post('/', function(request, response) {
     var returning_data = {}
     var location = request.body["location"]
-    console.log(location)
+    var filter = request.body["filter"]
     geo.get_location(location, keys.geolocation).then((dictionary) => {
         returning_data["location"] = dictionary
-        return pixabay.city_background(location, keys.pixabay).then((dictionary) => {
+        return places.places(returning_data.location["lat"], returning_data.location["long"], request.body["filter"], keys.googleplaces).then((dictionary)=>{
+            returning_data["places"] = dictionary
+            return pixabay.city_background(location, keys.pixabay).then((dictionary) => {
             returning_data["background"] = dictionary
             return news.NewsHeading(location, keys.news).then((dictionary) => {
                 returning_data["headlines"] = dictionary
@@ -73,6 +76,9 @@ app.post('/', function(request, response) {
         response.send(JSON.stringify(error))
     })
 })
+})
+
+
 
 /**
  * Appends list into search.json.

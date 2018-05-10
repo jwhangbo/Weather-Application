@@ -1,6 +1,6 @@
 const request = require("request");
 
-function places(lat, lng, filter, key){
+module.exports.places = function(lat, lng, filter, key){
 	var dict_place = {}
 	var link = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&type=${filter}&radius=50000&opennow&key=${key}`
 	return new Promise((resolve, reject) => {
@@ -11,7 +11,6 @@ function places(lat, lng, filter, key){
 		(eer, resp, body) => {
 			temp = 0
 			if (!("ok" in body)) {
-				//console.log(body["results"].length)
 				var bodylength = body["results"].length
 				for(var i=0; i<bodylength; i++){
 					count = i + 1

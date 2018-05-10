@@ -88,7 +88,8 @@ $(function() {
          * @type {Object}
          */
         var search = {}
-        search.location = $('#Searchbox').val();      
+        search.location = $('#Searchbox').val();  
+        search.filter = get_radial()    
         ajax(search)  
     })
 
@@ -103,6 +104,7 @@ $(function() {
              */
             var search = {}
             search.location = $('#Searchbox').val(); 
+            search.filter = get_radial()
             ajax(search)  
         }     
     })
@@ -118,6 +120,7 @@ function ajax(search){
                 console.log('success');
                 var returned = JSON.parse(JSON.stringify(data))
                 returned = JSON.parse(data)
+                console.log(returned)
                 if (returned["error"] === "None"){
                     google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'], returned.location['long']));
                     load_news(returned["headlines"])
@@ -256,7 +259,7 @@ function get_radial(){
     else if (document.getElementById("Zoo").checked == true){
         return("zoo")
     }
-    else if (document.getElementById("res").checked == true){
+    else if (document.getElementById("Res").checked == true){
         return("restraunt")
     }
 }
