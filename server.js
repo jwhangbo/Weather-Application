@@ -34,8 +34,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(__dirname + '/public'));
 
 
-
-
 /**
  * Variable used to store /public/ directory
  * @type {[type]}

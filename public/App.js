@@ -41,15 +41,12 @@ function geo() {
 geo();
 
 
-
 /**
  * Function that builds the map using latitude and longitude
  * @param  {[type]} lati  used for latitude
  * @param  {[type]} longi used for longitude
  * @return {[type]}       [description]
  */
-
-
 function theMap(lati, longi) {
 
    var map = new google.maps.Map(document.getElementById('mapbox'), {
@@ -106,8 +103,6 @@ $(function() {
         })
     })
 })
-
-
 
 
 /**
