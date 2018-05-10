@@ -17,5 +17,3 @@ function places(lat, lng, key){
 		})
 	})
 }
-
-places("49.25","-123.19",'AIzaSyBb9iHdqEA4Z2e5HxHpC5TTFKuOiRmlFYA')
