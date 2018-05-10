@@ -221,3 +221,36 @@ function showSlides() {
     slides[slideIndex - 1].style.display = "block";
     setTimeout(showSlides, 8000); // Change image every 2 seconds
 }
+
+function get_radial(){
+    if (document.getElementById("AP").checked == true){
+        return("amusement_park")
+    }
+    else if (document.getElementById("AQ").checked == true){
+        return("aquarium")
+    }
+    else if (document.getElementById("AG").checked == true){
+        return("art_gallery")
+    }
+    else if (document.getElementById("CAS").checked == true){
+        return("casino")
+    }
+    else if (document.getElementById("MM").checked == true){
+        return("museum")
+    }
+    else if (document.getElementById("NC").checked == true){
+        return("night_club")
+    }
+    else if (document.getElementById("Park").checked == true){
+        return("park")
+    }
+    else if (document.getElementById("SM").checked == true){
+        return("shopping_mall")
+    }
+    else if (document.getElementById("Zoo").checked == true){
+        return("zoo")
+    }
+    else if (document.getElementById("res").checked == true){
+        return("restraunt")
+    }
+}
