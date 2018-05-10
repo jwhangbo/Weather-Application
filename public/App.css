@@ -154,11 +154,12 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
 
 #mapOptions {
     width: 5%;
+    overflow: visible;
 }
 
 .dropButton {
     background-color: rgba(0,0,0,0);
-    font-size: 18px;
+    font-size: 16px; /* 16 for chrome, 18 for firefox */
     border: none;
 }
 
@@ -169,9 +170,17 @@ html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
     background-color: #f1f1f1;
     min-width: 160px;
     box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    padding: 12px 16px;
     z-index: 1;
 }
 
 #mapOptions:hover .mapOptions-content {
+    display: block;
+}
+
+.mapOptions-form input {
+    color: black;
+    padding: 12px 16px;
+    text-decoration: none;
     display: block;
 }
