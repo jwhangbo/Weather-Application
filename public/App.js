@@ -39,6 +39,9 @@ function geo() {
     }
 }
 geo();
+
+
+
 /**
  * Function that builds the map using latitude and longitude
  * @param  {[type]} lati  used for latitude
@@ -98,10 +101,13 @@ $(function() {
                 google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'], returned.location['long']));
                 load_news(returned["headlines"])
                 load_weather(returned.weather)
+                load_bg(returned["background"])
             }
         })
     })
 })
+
+
 
 
 /**
@@ -119,6 +125,11 @@ function loadinfo(returned) {
     document.getElementById("weather").innerHTML = returned.requested["summary"]
     document.getElementById("lat").innerHTML = returned.requested["lat"]
     document.getElementById("lng").innerHTML = returned.requested["long"]
+
+}
+
+function load_bg(background) {
+    document.body.style.backgroundImage = "url("+background+")";
 }
 
 function load_news(dict) {

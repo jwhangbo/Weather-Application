@@ -106,7 +106,8 @@
 
 body {
     background-color: white;
-    background-image: url("http://www.bhmpics.com/wallpapers/vancouver_city_night_blue_sky-1920x1080.jpg")
+    background-image: url("http://www.bhmpics.com/wallpapers/vancouver_city_night_blue_sky-1920x1080.jpg");
+    background-size: 135%;
 }
 
 .w3-card {
