@@ -2,7 +2,7 @@ const request = require("request");
 
 module.exports.places = function(lat, lng, filter, key){
 	var dict_place = {}
-	var link = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&type=${filter}&radius=50000&opennow&key=${key}`
+	var link = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&type=${filter}&radius=10000&opennow&key=${key}`
 	return new Promise((resolve, reject) => {
 		request({
 			url: link,

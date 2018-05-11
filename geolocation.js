@@ -18,7 +18,6 @@ module.exports.get_location = function(place, key) {
                     dict.location = (body.results[0].address_components[0].long_name)
                     dict.lat = (body.results[0].geometry["location"].lat);
                     dict.long = (body.results[0].geometry["location"].lng);
-                    console.log(dict)
                     resolve(dict)
                 }
                 else if(types.indexOf('locality')== -1){
