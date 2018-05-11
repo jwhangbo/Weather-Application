@@ -7,7 +7,7 @@
 /* VARS */
 
 var monthList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
-var dayList = [ 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat','Sun']
+var dayList = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat']
 
 /** 
  * geo weather
