@@ -19,7 +19,6 @@ module.exports.city_background = function(place, key){
             } else {
                 dict_bg = (body.hits[0].largeImageURL);
             }
-            console.log(dict_bg)
             resolve(dict_bg)
         })
     })

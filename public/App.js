@@ -95,7 +95,7 @@ function theMap(lati, longi) {
  * @return {[type]}       [description]
  */
 function addMarker(dict) {
-    var min = 1, max = 5
+    var min = 1, max = Object.keys(dict).length
 
     var lati = dict.place1.geometry["lat"],
         longi = dict.place1.geometry["lng"]
@@ -173,7 +173,6 @@ function ajax(search){
                 console.log('success');
                 var returned = JSON.parse(JSON.stringify(data))
                 returned = JSON.parse(data)
-                console.log(returned)
                 if (returned["error"] === "None"){
                     google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'], returned.location['long']));
                     load_news(returned["headlines"])
@@ -214,12 +213,24 @@ function load_bg(background) {
 }
 
 function load_attract(dict) {
+    document.getElementById("attract").innerHTML = ""
+    reset_attr()
     addMarker(dict)
-    document.getElementById("attr1").innerHTML = "<b>" + dict.place1["title"] +  "</b> [" + dict.place1["rating"] + "] <br> " +  dict.place1["address"]
-    document.getElementById("attr2").innerHTML = "<b>" + dict.place2["title"] +  "</b> [" + dict.place2["rating"] + "] <br> " +  dict.place2["address"]
-    document.getElementById("attr3").innerHTML = "<b>" + dict.place3["title"] +  "</b> [" + dict.place3["rating"] + "] <br> " +  dict.place3["address"]
-    document.getElementById("attr4").innerHTML = "<b>" + dict.place4["title"] +  "</b> [" + dict.place4["rating"] + "] <br> " +  dict.place4["address"]
-    document.getElementById("attr5").innerHTML = "<b>" + dict.place5["title"] +  "</b> [" + dict.place5["rating"] + "] <br> " +  dict.place5["address"]
+    var dict_length = Object.keys(dict).length
+    for(var i=1; i < dict_length+1; i++){
+        var ndiv = document.createElement("div")
+        ndiv.setAttribute("id","attr"+i)
+        ndiv.className = "attrBox"
+        ndiv.innerHTML = "<b>" + dict["place"+i]["title"] +  "</b> [" + dict["place"+i]["rating"] + "] <br> " +  dict["place"+i]["address"]
+        document.getElementById("attract").appendChild(ndiv)
+    }
+
+    function reset_attr(){
+        var ndiv = document.createElement("h2")
+        ndiv.className = "el-head"
+        ndiv.innerHTML= "List of Attractions"
+        document.getElementById("attract").appendChild(ndiv)
+    }
 }
 
 function load_news(dict) {
@@ -246,13 +257,6 @@ function load_news(dict) {
     document.getElementById("link3").href = dict.dict_url[2]
     document.getElementById("link4").href = dict.dict_url[3]
     document.getElementById("link5").href = dict.dict_url[4]
-
-
-    /*
-    for(var i = 0; i <= dict["dict_title"].length;i++){
-        console.log(dict[JSON.stringify(i)])
-    }
-    */
 }
 
 function load_weather(dict){
@@ -262,13 +266,12 @@ function load_weather(dict){
             w_date = new Date(),
             w_day = new Date(),
             day_dict = dict["day"+day];
-            console.log(w_day)
-            weekday = i
+            weekday = w_day.getDay() + i
         document.getElementById("w_icon" + day).src = day_dict["icon"]
         document.getElementById("w_summary" + day).innerHTML = day_dict["desc"]
         document.getElementById("w_temp" + day).innerHTML = day_dict["mintemp"] + "°C ~ " + day_dict["maxtemp"] + "°C"
         if (weekday > 6) {
-            weekday = 0
+            weekday = weekday % 7
         }
         document.getElementById("w_date" + day).innerHTML = dayList[weekday] + ", "+ monthList[w_month.getMonth()] + " " + (w_date.getDate() + day-1)
     }
