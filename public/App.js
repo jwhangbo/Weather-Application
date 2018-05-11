@@ -88,6 +88,40 @@ function theMap(lati, longi) {
 
     
 }
+
+/**
+ * Function that builds the map using latitude and longitude of the attractions
+ * @param  {[type]} dict used to retrieve lat/lng for each place
+ * @return {[type]}       [description]
+ */
+function addMarker(dict) {
+    var min = 1, max = 5
+
+    var lati = dict.place1.geometry["lat"],
+        longi = dict.place1.geometry["lng"]
+
+    var map = new google.maps.Map(document.getElementById('mapbox'), {
+        center: {lat: lati, lng: longi},
+        zoom: 13,
+        draggable: true,
+        fullscreenControl: false,
+        streetViewControl: false,
+        mapTypeControl: false,
+        zoomControl: true
+    });
+
+    for(var i=min; i<max+1; i++) {
+        var place = dict["place"+i]
+        lati = place.geometry["lat"]
+        longi = place.geometry["lng"]
+        var marker = new google.maps.Marker({
+            position: {lat: lati, lng: longi},
+            map: map,
+        });
+    }
+    
+}
+
 geo();
 
 
@@ -145,12 +179,14 @@ function ajax(search){
                     load_news(returned["headlines"])
                     load_weather(returned.weather)
                     load_bg(returned["background"])
+                    load_attract(returned["places"])
                 } else {
                     alert(returned["error"])
                 }
             }
     })
 }
+
 /**
  * Function that loads info that has been stored
  * @param  {Object} returned Grabs all the info stored to be re-displayed
@@ -169,8 +205,21 @@ function loadinfo(returned) {
 
 }
 
+/**
+ * Function that loads the background image of the city into the page
+ * @param  {Object} background the url containing the city img for the background
+ */
 function load_bg(background) {
     document.body.style.backgroundImage = "url("+background+")";
+}
+
+function load_attract(dict) {
+    addMarker(dict)
+    document.getElementById("attr1").innerHTML = "<b>" + dict.place1["title"] +  "</b> [" + dict.place1["rating"] + "] <br> " +  dict.place1["address"]
+    document.getElementById("attr2").innerHTML = "<b>" + dict.place2["title"] +  "</b> [" + dict.place2["rating"] + "] <br> " +  dict.place2["address"]
+    document.getElementById("attr3").innerHTML = "<b>" + dict.place3["title"] +  "</b> [" + dict.place3["rating"] + "] <br> " +  dict.place3["address"]
+    document.getElementById("attr4").innerHTML = "<b>" + dict.place4["title"] +  "</b> [" + dict.place4["rating"] + "] <br> " +  dict.place4["address"]
+    document.getElementById("attr5").innerHTML = "<b>" + dict.place5["title"] +  "</b> [" + dict.place5["rating"] + "] <br> " +  dict.place5["address"]
 }
 
 function load_news(dict) {
