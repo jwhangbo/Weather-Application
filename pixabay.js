@@ -14,7 +14,11 @@ module.exports.city_background = function(place, key){
             json:true
         },
         (err, resp, body) => {
-            dict_bg = (body.hits[0].largeImageURL);
+            if (body.totalHits == 0) {
+                dict_bg = "https://www.plant.ca/wp-content/uploads/2014/08/Beijingahenobarbus.jpg"
+            } else {
+                dict_bg = (body.hits[0].largeImageURL);
+            }
             console.log(dict_bg)
             resolve(dict_bg)
         })
