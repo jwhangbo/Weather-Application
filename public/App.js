@@ -4,6 +4,10 @@
  */
 
 
+/* VARS */
+
+var monthList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+var dayList = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat']
 
 /** 
  * geo weather
@@ -39,14 +43,14 @@ function geo() {
     }
 }
 geo();
+
+
 /**
  * Function that builds the map using latitude and longitude
  * @param  {[type]} lati  used for latitude
  * @param  {[type]} longi used for longitude
  * @return {[type]}       [description]
  */
-
-
 function theMap(lati, longi) {
 
    var map = new google.maps.Map(document.getElementById('mapbox'), {
@@ -63,6 +67,25 @@ function theMap(lati, longi) {
     position: {lat: lati, lng: longi},
     map: map,
     });
+
+    //temp marker 1
+    var marker = new google.maps.Marker({
+    position: {lat: 51.5040727, lng: -0.1784748},
+    map: map,
+    });
+
+    //temp marker 2
+    var marker = new google.maps.Marker({
+    position: {lat: 51.4880927, lng: -0.1383774},
+    map: map,
+    });
+
+    //temp marker 3
+    var marker = new google.maps.Marker({
+    position: {lat: 51.4937705, lng: -0.1098964},
+    map: map,
+    });
+
     
 }
 geo();
@@ -84,11 +107,30 @@ $(function() {
          * @type {Object}
          */
         var search = {}
-        search.location = $('#Searchbox').val();
-        search.filter = get_radial()
-        console.log(search)
+        search.location = $('#Searchbox').val();  
+        search.filter = get_radial()    
+        ajax(search)  
+    })
 
-        $.ajax({
+    $('#Searchbox').keypress(function(e) {
+        if(e.which == 13) {
+            e.preventDefault();
+            console.log('select_link clicked');
+
+            /**
+             * Gets value from searchbox to search for location
+             * @type {Object}
+             */
+            var search = {}
+            search.location = $('#Searchbox').val(); 
+            search.filter = get_radial()
+            ajax(search)  
+        }     
+    })
+})
+
+function ajax(search){
+    $.ajax({
             type: 'POST',
             data: JSON.stringify(search),
             contentType: 'application/json',
@@ -97,15 +139,18 @@ $(function() {
                 console.log('success');
                 var returned = JSON.parse(JSON.stringify(data))
                 returned = JSON.parse(data)
-                google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'], returned.location['long']));
-                load_news(returned["headlines"])
-                load_weather(returned.weather)
+                console.log(returned)
+                if (returned["error"] === "None"){
+                    google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'], returned.location['long']));
+                    load_news(returned["headlines"])
+                    load_weather(returned.weather)
+                    load_bg(returned["background"])
+                } else {
+                    alert(returned["error"])
+                }
             }
-        })
     })
-})
-
-
+}
 /**
  * Function that loads info that has been stored
  * @param  {Object} returned Grabs all the info stored to be re-displayed
@@ -121,6 +166,11 @@ function loadinfo(returned) {
     document.getElementById("weather").innerHTML = returned.requested["summary"]
     document.getElementById("lat").innerHTML = returned.requested["lat"]
     document.getElementById("lng").innerHTML = returned.requested["long"]
+
+}
+
+function load_bg(background) {
+    document.body.style.backgroundImage = "url("+background+")";
 }
 
 function load_news(dict) {
@@ -158,11 +208,15 @@ function load_news(dict) {
 
 function load_weather(dict){
     for(var i = 0; i<5; i++){
-        var day = i + 1
-        var day_dict = dict["day"+day]
+        var day = i + 1,
+            w_month = new Date(),
+            w_date = new Date(),
+            w_day = new Date(),
+            day_dict = dict["day"+day];
         document.getElementById("w_icon" + day).src = day_dict["icon"]
         document.getElementById("w_summary" + day).innerHTML = day_dict["desc"]
         document.getElementById("w_temp" + day).innerHTML = day_dict["mintemp"] + "°C ~ " + day_dict["maxtemp"] + "°C"
+        document.getElementById("w_date" + day).innerHTML = dayList[w_day.getDay() + day-1] + ", "+ monthList[w_month.getMonth()] + " " + (w_date.getDate() + day-1)
     }
 }
 
@@ -224,7 +278,7 @@ function get_radial(){
     else if (document.getElementById("Zoo").checked == true){
         return("zoo")
     }
-    else if (document.getElementById("res").checked == true){
+    else if (document.getElementById("Res").checked == true){
         return("restraunt")
     }
 }

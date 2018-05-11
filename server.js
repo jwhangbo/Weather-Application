@@ -7,6 +7,8 @@ const geo = require("./geolocation.js")
 const news = require("./news.js")
 
 const forecast = require("./5days.js")
+const pixabay = require("./pixabay.js")
+const places = require("./attract.js")
 
 const keys = get_keys()
 /**
@@ -33,9 +35,6 @@ app.use(bodyParser.urlencoded({ extended: false }))
 app.use(express.static(__dirname + '/public'));
 
 
-
-
-
 /**
  * Variable used to store /public/ directory
  * @type {[type]}
@@ -47,28 +46,39 @@ app.get('/', (request, response) => {
         "apikey": keys.googlemaps
     });
 });
-
+//
 app.post('/', function(request, response) {
     var returning_data = {}
     var location = request.body["location"]
-    console.log(location)
+    var filter = request.body["filter"]
     geo.get_location(location, keys.geolocation).then((dictionary) => {
         returning_data["location"] = dictionary
-        return news.NewsHeading(location, keys.news).then((dictionary) => {
-            returning_data["headlines"] = dictionary
-            return forecast.forecast5days(returning_data.location["location"], keys.worldweatheronline).then((dictionary)=>{
-                returning_data["weather"]=dictionary
-                response.send(JSON.stringify(returning_data))
-            },(error)=>{
-                console.log(error)
+        return places.places(returning_data.location["lat"], returning_data.location["long"], request.body["filter"], keys.googleplaces).then((dictionary)=>{
+            returning_data["places"] = dictionary
+            return pixabay.city_background(location, keys.pixabay).then((dictionary) => {
+            returning_data["background"] = dictionary
+            return news.NewsHeading(location, keys.news).then((dictionary) => {
+                returning_data["headlines"] = dictionary
+                return forecast.forecast5days(returning_data.location["location"], keys.worldweatheronline).then((dictionary)=>{
+                    returning_data["weather"]=dictionary
+                    returning_data["error"]="None"
+                    response.send(JSON.stringify(returning_data))
+                },(error)=>{
+                    console.log(error)
+                })
+            }, (error)=>{
+                console.log(error);
             })
         }, (error)=>{
-            console.log(error);
+                console.log(error);
         })
     }, (error) => {
-        console.log(error)
+        response.send(JSON.stringify(error))
     })
 })
+})
+
+
 
 /**
  * Appends list into search.json.
