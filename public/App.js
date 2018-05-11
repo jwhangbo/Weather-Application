@@ -262,10 +262,15 @@ function load_weather(dict){
             w_date = new Date(),
             w_day = new Date(),
             day_dict = dict["day"+day];
+            console.log(w_day)
+            weekday = i
         document.getElementById("w_icon" + day).src = day_dict["icon"]
         document.getElementById("w_summary" + day).innerHTML = day_dict["desc"]
         document.getElementById("w_temp" + day).innerHTML = day_dict["mintemp"] + "°C ~ " + day_dict["maxtemp"] + "°C"
-        document.getElementById("w_date" + day).innerHTML = dayList[w_day.getDay() + day-1] + ", "+ monthList[w_month.getMonth()] + " " + (w_date.getDate() + day-1)
+        if (weekday > 6) {
+            weekday = 0
+        }
+        document.getElementById("w_date" + day).innerHTML = dayList[weekday] + ", "+ monthList[w_month.getMonth()] + " " + (w_date.getDate() + day-1)
     }
 }
 
@@ -328,6 +333,6 @@ function get_radial(){
         return("zoo")
     }
     else if (document.getElementById("Res").checked == true){
-        return("restraunt")
+        return("restaurant")
     }
 }
