@@ -31,6 +31,7 @@
     width: 27.5%;
     height: 55%;
     z-index: 0;
+    overflow-y: scroll;
 }
 
 #weather {
@@ -136,6 +137,12 @@ body {
     margin: auto;
     background: rgba(255,255,255,0.5);
     height: 85%;
+}
+
+.attrBox {
+    background: rgba(255,255,255,0.5);
+    padding: 7px;
+    margin: 4px;
 }
 
 html,body,h1,h2,h3,h4,h5 {font-family: "Open Sans", sans-serif}
