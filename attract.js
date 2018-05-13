@@ -1,5 +1,13 @@
 const request = require("request");
 
+
+/**
+ * Function that builds up the list of attractions in the area
+ * @param  {String} lat    string containing latitude of place.
+ * @param  {String} lng    string containing longitude of place.
+ * @param  {String} filter used to filter for places.
+ * @param  {String} key    API key used
+ */
 module.exports.places = function(lat, lng, filter, key){
 	var dict_place = {}
 	var link = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&type=${filter}&radius=10000&opennow&key=${key}`

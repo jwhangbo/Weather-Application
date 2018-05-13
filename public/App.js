@@ -1,12 +1,15 @@
+
+
 /**
- * Stores home location
- * @type {Object}
+ * List of shortened month names
+ * @type {Array}
  */
-
-
-/* VARS */
-
 var monthList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+/**
+ * List of shortened day names.
+ * @type {Array}
+ */
 var dayList = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat']
 
 /**
@@ -248,6 +251,11 @@ function load_bg(background) {
     document.body.style.backgroundImage = "url("+background+")";
 }
 
+
+/**
+ * Function that loads the attraction dictionary.
+ * @param  {Array} dict List of the attractions
+ */
 function load_attract(dict) {
     document.getElementById("attract").innerHTML = ""
     reset_attr()
@@ -260,7 +268,9 @@ function load_attract(dict) {
         ndiv.innerHTML = "<b>" + dict["place"+i]["title"] +  "</b> [" + dict["place"+i]["rating"] + "] <br> " +  dict["place"+i]["address"]
         document.getElementById("attract").appendChild(ndiv)
     }
-
+    /**
+     * Resets the attraction list
+     */
     function reset_attr(){
         var ndiv = document.createElement("h2")
         ndiv.className = "el-head"
@@ -269,6 +279,11 @@ function load_attract(dict) {
     }
 }
 
+
+/**
+ * Function to load the list of news related to the place searched for
+ * @param  {Array} dict List of news
+ */
 function load_news(dict) {
     document.getElementById("title1").innerHTML = dict.dict_title[0]
     document.getElementById("title2").innerHTML = dict.dict_title[1]
@@ -295,6 +310,12 @@ function load_news(dict) {
     document.getElementById("link5").href = dict.dict_url[4]
 }
 
+
+/**
+ * Function that loads the weather based on city searched for.
+ * @param  {Array} dict Contains the weather info.
+ * @return {[type]}      [description]
+ */
 function load_weather(dict){
     for(var i = 0; i<5; i++){
         var day = i + 1,
@@ -327,6 +348,9 @@ sub.addEventListener("click", function() {
 var slideIndex = 0;
 showSlides();
 
+/**
+ * Builds the slides that are shown.
+ */
 function showSlides() {
     var i;
     var slides = document.getElementsByClassName("mySlides");
@@ -343,6 +367,10 @@ function showSlides() {
     setTimeout(showSlides, 8000); // Change image every 2 seconds
 }
 
+
+/**
+ * Function that will build the type of places that will be classified as attractions.
+ */
 function get_radial(){
     if (document.getElementById("AP").checked == true){
         return("amusement_park")
