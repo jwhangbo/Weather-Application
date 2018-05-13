@@ -9,7 +9,7 @@
 var monthList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 var dayList = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat']
 
-/** 
+/**
  * geo weather
  *Fuction that changes the homeloc div.
  *If the it is able to get the cordinates of the user then it will send it to the temp and summary div
@@ -34,7 +34,7 @@ function geo() {
         homecoor["long"] = position.coords.longitude;
         google.maps.event.addDomListener(window, 'load', theMap(homecoor["lat"], homecoor["long"]));
     }
-    /** 
+    /**
      * error message
      */
     function error() {
@@ -68,10 +68,34 @@ function theMap(lati, longi) {
     map: map,
     });
 
+
+    // ALL THE STUFF BELOW ARE TEMPORARY AND HARDCODED TESTS
     //temp marker 1
-    var marker = new google.maps.Marker({
+    var marker1 = new google.maps.Marker({
     position: {lat: 51.5040727, lng: -0.1784748},
     map: map,
+    });
+
+    var infowindow = new google.maps.InfoWindow({
+      content: "TESTING"
+    });
+
+    // Custom icons for markers
+    // Switchable between mouseover and mouseout
+
+    // Example:
+    /* var icon2 = "feelsgoodman.png";
+
+    google.maps.event.addListener(marker1, 'mouseover', function() {
+      marker1.setIcon(icon2);
+    });
+
+    */
+    
+    // Somehow need to create a list to iterate containing all the infowindows
+    // Reference: https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple
+    marker1.addListener('click', function() {
+      infowindow.open(map, marker1)
     });
 
     //temp marker 2
@@ -86,7 +110,7 @@ function theMap(lati, longi) {
     map: map,
     });
 
-    
+
 }
 
 /**
@@ -119,14 +143,14 @@ function addMarker(dict) {
             map: map,
         });
     }
-    
+
 }
 
 geo();
 
 
 /**
- * Ajax 
+ * Ajax
  * @param  {Object} #sub Ajax function to get into on link cicked
  * @param  {Objext} $.ajax Parses jason info
  * @return {Object} Parsed data from JSON file
@@ -141,9 +165,9 @@ $(function() {
          * @type {Object}
          */
         var search = {}
-        search.location = $('#Searchbox').val();  
-        search.filter = get_radial()    
-        ajax(search)  
+        search.location = $('#Searchbox').val();
+        search.filter = get_radial()
+        ajax(search)
     })
 
     $('#Searchbox').keypress(function(e) {
@@ -156,10 +180,10 @@ $(function() {
              * @type {Object}
              */
             var search = {}
-            search.location = $('#Searchbox').val(); 
+            search.location = $('#Searchbox').val();
             search.filter = get_radial()
-            ajax(search)  
-        }     
+            ajax(search)
+        }
     })
 })
 
@@ -251,7 +275,7 @@ function load_news(dict) {
     document.getElementById("title3").href = dict.dict_url[2]
     document.getElementById("title4").href = dict.dict_url[3]
     document.getElementById("title5").href = dict.dict_url[4]
-    
+
     document.getElementById("link1").href = dict.dict_url[0]
     document.getElementById("link2").href = dict.dict_url[1]
     document.getElementById("link3").href = dict.dict_url[2]
@@ -278,7 +302,7 @@ function load_weather(dict){
 }
 
 
-/** 
+/**
  * refreshes the map
  */
 
