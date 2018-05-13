@@ -142,8 +142,20 @@ function addMarker(dict) {
             position: {lat: lati, lng: longi},
             map: map,
         });
+        var infowindow = new google.maps.InfoWindow({
+            content: "You have clicked " + i
+          });
+        google.maps.event.addListener(marker, "click",mapclicker(i, marker.getPosition(),infowindow, map))
     }
 
+}
+
+function mapclicker(num, coor,info, map){
+    return function(){
+        console.log("this is attraction " + num)
+        info.setPosition(coor)
+        info.open(map)
+    }
 }
 
 geo();
