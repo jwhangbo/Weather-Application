@@ -49,7 +49,6 @@ app.get('/', (request, response) => {
 //
 app.post('/', function(request, response) {
     var returning_data = {}
-    console.log(request.body)
     var location = request.body["location"]
     var filter = request.body["filter"]
 
