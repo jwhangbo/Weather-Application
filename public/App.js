@@ -9,7 +9,7 @@
 var monthList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 var dayList = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat']
 
-/** 
+/**
  * geo weather
  *Fuction that changes the homeloc div.
  *If the it is able to get the cordinates of the user then it will send it to the temp and summary div
@@ -34,7 +34,7 @@ function geo() {
         homecoor["long"] = position.coords.longitude;
         google.maps.event.addDomListener(window, 'load', theMap(homecoor["lat"], homecoor["long"]));
     }
-    /** 
+    /**
      * error message
      */
     function error() {
@@ -68,10 +68,34 @@ function theMap(lati, longi) {
     map: map,
     });
 
+
+    // ALL THE STUFF BELOW ARE TEMPORARY AND HARDCODED TESTS
     //temp marker 1
-    var marker = new google.maps.Marker({
+    var marker1 = new google.maps.Marker({
     position: {lat: 51.5040727, lng: -0.1784748},
     map: map,
+    });
+
+    var infowindow = new google.maps.InfoWindow({
+      content: "TESTING"
+    });
+
+    // Custom icons for markers
+    // Switchable between mouseover and mouseout
+
+    // Example:
+    /* var icon2 = "feelsgoodman.png";
+
+    google.maps.event.addListener(marker1, 'mouseover', function() {
+      marker1.setIcon(icon2);
+    });
+
+    */
+    
+    // Somehow need to create a list to iterate containing all the infowindows
+    // Reference: https://developers.google.com/maps/documentation/javascript/examples/infowindow-simple
+    marker1.addListener('click', function() {
+      infowindow.open(map, marker1)
     });
 
     //temp marker 2
@@ -86,7 +110,7 @@ function theMap(lati, longi) {
     map: map,
     });
 
-    
+
 }
 
 /**
@@ -95,7 +119,7 @@ function theMap(lati, longi) {
  * @return {[type]}       [description]
  */
 function addMarker(dict) {
-    var min = 1, max = 5
+    var min = 1, max = Object.keys(dict).length
 
     var lati = dict.place1.geometry["lat"],
         longi = dict.place1.geometry["lng"]
@@ -118,15 +142,27 @@ function addMarker(dict) {
             position: {lat: lati, lng: longi},
             map: map,
         });
+        var infowindow = new google.maps.InfoWindow({
+            content: "You have clicked " + i
+          });
+        google.maps.event.addListener(marker, "click",mapclicker(i, marker.getPosition(),infowindow, map))
     }
-    
+
+}
+
+function mapclicker(num, coor,info, map){
+    return function(){
+        console.log("this is attraction " + num)
+        info.setPosition(coor)
+        info.open(map)
+    }
 }
 
 geo();
 
 
 /**
- * Ajax 
+ * Ajax
  * @param  {Object} #sub Ajax function to get into on link cicked
  * @param  {Objext} $.ajax Parses jason info
  * @return {Object} Parsed data from JSON file
@@ -141,9 +177,9 @@ $(function() {
          * @type {Object}
          */
         var search = {}
-        search.location = $('#Searchbox').val();  
-        search.filter = get_radial()    
-        ajax(search)  
+        search.location = $('#Searchbox').val();
+        search.filter = get_radial()
+        ajax(search)
     })
 
     $('#Searchbox').keypress(function(e) {
@@ -156,10 +192,10 @@ $(function() {
              * @type {Object}
              */
             var search = {}
-            search.location = $('#Searchbox').val(); 
+            search.location = $('#Searchbox').val();
             search.filter = get_radial()
-            ajax(search)  
-        }     
+            ajax(search)
+        }
     })
 })
 
@@ -173,7 +209,6 @@ function ajax(search){
                 console.log('success');
                 var returned = JSON.parse(JSON.stringify(data))
                 returned = JSON.parse(data)
-                console.log(returned)
                 if (returned["error"] === "None"){
                     google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'], returned.location['long']));
                     load_news(returned["headlines"])
@@ -214,12 +249,24 @@ function load_bg(background) {
 }
 
 function load_attract(dict) {
+    document.getElementById("attract").innerHTML = ""
+    reset_attr()
     addMarker(dict)
-    document.getElementById("attr1").innerHTML = "<b>" + dict.place1["title"] +  "</b> [" + dict.place1["rating"] + "] <br> " +  dict.place1["address"]
-    document.getElementById("attr2").innerHTML = "<b>" + dict.place2["title"] +  "</b> [" + dict.place2["rating"] + "] <br> " +  dict.place2["address"]
-    document.getElementById("attr3").innerHTML = "<b>" + dict.place3["title"] +  "</b> [" + dict.place3["rating"] + "] <br> " +  dict.place3["address"]
-    document.getElementById("attr4").innerHTML = "<b>" + dict.place4["title"] +  "</b> [" + dict.place4["rating"] + "] <br> " +  dict.place4["address"]
-    document.getElementById("attr5").innerHTML = "<b>" + dict.place5["title"] +  "</b> [" + dict.place5["rating"] + "] <br> " +  dict.place5["address"]
+    var dict_length = Object.keys(dict).length
+    for(var i=1; i < dict_length+1; i++){
+        var ndiv = document.createElement("div")
+        ndiv.setAttribute("id","attr"+i)
+        ndiv.className = "attrBox"
+        ndiv.innerHTML = "<b>" + dict["place"+i]["title"] +  "</b> [" + dict["place"+i]["rating"] + "] <br> " +  dict["place"+i]["address"]
+        document.getElementById("attract").appendChild(ndiv)
+    }
+
+    function reset_attr(){
+        var ndiv = document.createElement("h2")
+        ndiv.className = "el-head"
+        ndiv.innerHTML= "List of Attractions"
+        document.getElementById("attract").appendChild(ndiv)
+    }
 }
 
 function load_news(dict) {
@@ -240,19 +287,12 @@ function load_news(dict) {
     document.getElementById("title3").href = dict.dict_url[2]
     document.getElementById("title4").href = dict.dict_url[3]
     document.getElementById("title5").href = dict.dict_url[4]
-    
+
     document.getElementById("link1").href = dict.dict_url[0]
     document.getElementById("link2").href = dict.dict_url[1]
     document.getElementById("link3").href = dict.dict_url[2]
     document.getElementById("link4").href = dict.dict_url[3]
     document.getElementById("link5").href = dict.dict_url[4]
-
-
-    /*
-    for(var i = 0; i <= dict["dict_title"].length;i++){
-        console.log(dict[JSON.stringify(i)])
-    }
-    */
 }
 
 function load_weather(dict){
@@ -262,15 +302,19 @@ function load_weather(dict){
             w_date = new Date(),
             w_day = new Date(),
             day_dict = dict["day"+day];
+            weekday = w_day.getDay() + i
         document.getElementById("w_icon" + day).src = day_dict["icon"]
         document.getElementById("w_summary" + day).innerHTML = day_dict["desc"]
         document.getElementById("w_temp" + day).innerHTML = day_dict["mintemp"] + "°C ~ " + day_dict["maxtemp"] + "°C"
-        document.getElementById("w_date" + day).innerHTML = dayList[w_day.getDay() + day-1] + ", "+ monthList[w_month.getMonth()] + " " + (w_date.getDate() + day-1)
+        if (weekday > 6) {
+            weekday = weekday % 7
+        }
+        document.getElementById("w_date" + day).innerHTML = dayList[weekday] + ", "+ monthList[w_month.getMonth()] + " " + (w_date.getDate() + day-1)
     }
 }
 
 
-/** 
+/**
  * refreshes the map
  */
 
@@ -328,6 +372,6 @@ function get_radial(){
         return("zoo")
     }
     else if (document.getElementById("Res").checked == true){
-        return("restraunt")
+        return("restaurant")
     }
 }
