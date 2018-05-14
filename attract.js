@@ -26,7 +26,7 @@ module.exports.places = function(lat, lng, filter, key){
 					place_dict["geometry"] = body["results"][i].geometry.location
 					place_dict["title"] = body["results"][i].name
 					place_dict["rating"] = body["results"][i].rating
-					place_dict["address"] = body["results"][i].vicinity
+                    place_dict["address"] = body["results"][i].vicinity
                     dict_place["place"+count] = place_dict
 				}
 				resolve(dict_place)
