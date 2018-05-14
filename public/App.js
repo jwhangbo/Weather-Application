@@ -142,19 +142,29 @@ function addMarker(dict) {
             position: {lat: lati, lng: longi},
             map: map,
         });
+        /*
         var infowindow = new google.maps.InfoWindow({
             content: "You have clicked " + i
           });
-        google.maps.event.addListener(marker, "click",mapclicker(i, marker.getPosition(),infowindow, map))
+          */
+        google.maps.event.addListener(marker, "click",mapclicker(place, marker.getPosition(), map))
     }
 
 }
 
-function mapclicker(num, coor,info, map){
+function mapclicker(place, coor, map){
     return function(){
-        console.log("this is attraction " + num)
-        info.setPosition(coor)
-        info.open(map)
+        var placename = place["title"]
+        var placerating = place["rating"]
+        var address = place["address"]
+        var ContentString = `<h6>${placename}</h6>`+
+            `<h5>${placerating}</h5>` +
+            `<p>${address}</p>`;
+        var infowindow = new google.maps.InfoWindow({
+            content: ContentString
+        });
+        infowindow.setPosition(coor)
+        infowindow.open(map)
     }
 }
 
@@ -194,6 +204,7 @@ $(function() {
             var search = {}
             search.location = $('#Searchbox').val();
             search.filter = get_radial()
+            console.log(search)
             ajax(search)
         }
     })
@@ -209,6 +220,7 @@ function ajax(search){
                 console.log('success');
                 var returned = JSON.parse(JSON.stringify(data))
                 returned = JSON.parse(data)
+                console.log(returned)
                 if (returned["error"] === "None"){
                     google.maps.event.addDomListener(window, 'load', theMap(returned.location['lat'], returned.location['long']));
                     load_news(returned["headlines"])
@@ -219,6 +231,20 @@ function ajax(search){
                     alert(returned["error"])
                 }
             }
+    })
+}
+
+function ajax_place(search){
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(search),
+        contentType: 'application/json',
+        url: 'http://localhost:8080/',
+        success: function(data){
+            console.log("successfully got review data")
+            var returned = JSON.parse(data)
+            console.log(returned)
+        }
     })
 }
 
