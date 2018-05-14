@@ -20,7 +20,6 @@ module.exports.places = function(lat, lng, filter, key){
 			temp = 0
 			if (!("ok" in body)) {
                 var bodylength = body["results"].length
-                console.log(link)
 				for(var i=0; i<bodylength; i++){
 					count = i + 1
 					place_dict = {}
