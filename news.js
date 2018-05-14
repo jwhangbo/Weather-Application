@@ -37,6 +37,10 @@ module.exports.NewsHeading = function(city, key) {
     })
 }
 
+/**
+ * Used to get the date for news
+ * @return {String} returns the date
+ */
 function get_date(){
     var d = new Date()
     var currmonth = d.getMonth() + 1
