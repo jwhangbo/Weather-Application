@@ -1,8 +1,16 @@
 const request = require("request");
 
+
+/**
+ * Function that builds up the list of attractions in the area
+ * @param  {String} lat    string containing latitude of place.
+ * @param  {String} lng    string containing longitude of place.
+ * @param  {String} filter used to filter for places.
+ * @param  {String} key    API key used
+ */
 module.exports.places = function(lat, lng, filter, key){
 	var dict_place = {}
-	var link = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&type=${filter}&radius=50000&opennow&key=${key}`
+	var link = `https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=${lat},${lng}&type=${filter}&radius=10000&opennow&key=${key}`
 	return new Promise((resolve, reject) => {
 		request({
 			url: link,
@@ -11,15 +19,15 @@ module.exports.places = function(lat, lng, filter, key){
 		(eer, resp, body) => {
 			temp = 0
 			if (!("ok" in body)) {
-				var bodylength = body["results"].length
+                var bodylength = body["results"].length
 				for(var i=0; i<bodylength; i++){
 					count = i + 1
 					place_dict = {}
 					place_dict["geometry"] = body["results"][i].geometry.location
 					place_dict["title"] = body["results"][i].name
 					place_dict["rating"] = body["results"][i].rating
-					place_dict["address"] = body["results"][i].vicinity
-					dict_place["place"+count] = place_dict
+                    place_dict["address"] = body["results"][i].vicinity
+                    dict_place["place"+count] = place_dict
 				}
 				resolve(dict_place)
 			}
