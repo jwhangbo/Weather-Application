@@ -1,12 +1,15 @@
+
+
 /**
- * Stores home location
- * @type {Object}
+ * List of shortened month names
+ * @type {Array}
  */
-
-
-/* VARS */
-
 var monthList = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+
+/**
+ * List of shortened day names.
+ * @type {Array}
+ */
 var dayList = ['Sun', 'Mon', 'Tues', 'Wed', 'Thurs', 'Fri', 'Sat']
 
 /**
@@ -119,7 +122,7 @@ function theMap(lati, longi) {
  * @return {[type]}       [description]
  */
 function addMarker(dict) {
-    var min = 1, max = 5
+    var min = 1, max = Object.keys(dict).length
 
     var lati = dict.place1.geometry["lat"],
         longi = dict.place1.geometry["lng"]
@@ -142,8 +145,30 @@ function addMarker(dict) {
             position: {lat: lati, lng: longi},
             map: map,
         });
+        /*
+        var infowindow = new google.maps.InfoWindow({
+            content: "You have clicked " + i
+          });
+          */
+        google.maps.event.addListener(marker, "click",mapclicker(place, marker.getPosition(), map))
     }
 
+}
+
+function mapclicker(place, coor, map){
+    return function(){
+        var placename = place["title"]
+        var placerating = place["rating"]
+        var address = place["address"]
+        var ContentString = `<h6>${placename}</h6>`+
+            `<h5>${placerating+"★"}</h5>` +
+            `<p>${address}</p>`;
+        var infowindow = new google.maps.InfoWindow({
+            content: ContentString
+        });
+        infowindow.setPosition(coor)
+        infowindow.open(map)
+    }
 }
 
 geo();
@@ -182,6 +207,7 @@ $(function() {
             var search = {}
             search.location = $('#Searchbox').val();
             search.filter = get_radial()
+            console.log(search)
             ajax(search)
         }
     })
@@ -211,6 +237,20 @@ function ajax(search){
     })
 }
 
+function ajax_place(search){
+    $.ajax({
+        type: 'POST',
+        data: JSON.stringify(search),
+        contentType: 'application/json',
+        url: 'http://localhost:8080/',
+        success: function(data){
+            console.log("successfully got review data")
+            var returned = JSON.parse(data)
+            console.log(returned)
+        }
+    })
+}
+
 /**
  * Function that loads info that has been stored
  * @param  {Object} returned Grabs all the info stored to be re-displayed
@@ -237,15 +277,39 @@ function load_bg(background) {
     document.body.style.backgroundImage = "url("+background+")";
 }
 
+
+/**
+ * Function that loads the attraction dictionary.
+ * @param  {Array} dict List of the attractions
+ */
 function load_attract(dict) {
+    document.getElementById("attract").innerHTML = ""
+    reset_attr()
     addMarker(dict)
-    document.getElementById("attr1").innerHTML = "<b>" + dict.place1["title"] +  "</b> [" + dict.place1["rating"] + "] <br> " +  dict.place1["address"]
-    document.getElementById("attr2").innerHTML = "<b>" + dict.place2["title"] +  "</b> [" + dict.place2["rating"] + "] <br> " +  dict.place2["address"]
-    document.getElementById("attr3").innerHTML = "<b>" + dict.place3["title"] +  "</b> [" + dict.place3["rating"] + "] <br> " +  dict.place3["address"]
-    document.getElementById("attr4").innerHTML = "<b>" + dict.place4["title"] +  "</b> [" + dict.place4["rating"] + "] <br> " +  dict.place4["address"]
-    document.getElementById("attr5").innerHTML = "<b>" + dict.place5["title"] +  "</b> [" + dict.place5["rating"] + "] <br> " +  dict.place5["address"]
+    var dict_length = Object.keys(dict).length
+    for(var i=1; i < dict_length+1; i++){
+        var ndiv = document.createElement("div")
+        ndiv.setAttribute("id","attr"+i)
+        ndiv.className = "attrBox"
+        ndiv.innerHTML = "<b>" + dict["place"+i]["title"] +  "</b> <br> " +  dict["place"+i]["address"]
+        document.getElementById("attract").appendChild(ndiv)
+    }
+    /**
+     * Resets the attraction list
+     */
+    function reset_attr(){
+        var ndiv = document.createElement("h2")
+        ndiv.className = "el-head"
+        ndiv.innerHTML= "List of Attractions"
+        document.getElementById("attract").appendChild(ndiv)
+    }
 }
 
+
+/**
+ * Function to load the list of news related to the place searched for
+ * @param  {Array} dict List of news
+ */
 function load_news(dict) {
     document.getElementById("title1").innerHTML = dict.dict_title[0]
     document.getElementById("title2").innerHTML = dict.dict_title[1]
@@ -270,15 +334,14 @@ function load_news(dict) {
     document.getElementById("link3").href = dict.dict_url[2]
     document.getElementById("link4").href = dict.dict_url[3]
     document.getElementById("link5").href = dict.dict_url[4]
-
-
-    /*
-    for(var i = 0; i <= dict["dict_title"].length;i++){
-        console.log(dict[JSON.stringify(i)])
-    }
-    */
 }
 
+
+/**
+ * Function that loads the weather based on city searched for.
+ * @param  {Array} dict Contains the weather info.
+ * @return {[type]}      [description]
+ */
 function load_weather(dict){
     for(var i = 0; i<5; i++){
         var day = i + 1,
@@ -286,13 +349,12 @@ function load_weather(dict){
             w_date = new Date(),
             w_day = new Date(),
             day_dict = dict["day"+day];
-            console.log(w_day)
-            weekday = i
+            weekday = w_day.getDay() + i
         document.getElementById("w_icon" + day).src = day_dict["icon"]
         document.getElementById("w_summary" + day).innerHTML = day_dict["desc"]
         document.getElementById("w_temp" + day).innerHTML = day_dict["mintemp"] + "°C ~ " + day_dict["maxtemp"] + "°C"
         if (weekday > 6) {
-            weekday = 0
+            weekday = weekday % 7
         }
         document.getElementById("w_date" + day).innerHTML = dayList[weekday] + ", "+ monthList[w_month.getMonth()] + " " + (w_date.getDate() + day-1)
     }
@@ -312,6 +374,9 @@ sub.addEventListener("click", function() {
 var slideIndex = 0;
 showSlides();
 
+/**
+ * Builds the slides that are shown.
+ */
 function showSlides() {
     var i;
     var slides = document.getElementsByClassName("mySlides");
@@ -328,6 +393,10 @@ function showSlides() {
     setTimeout(showSlides, 8000); // Change image every 2 seconds
 }
 
+
+/**
+ * Function that will build the type of places that will be classified as attractions.
+ */
 function get_radial(){
     if (document.getElementById("AP").checked == true){
         return("amusement_park")
