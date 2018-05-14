@@ -265,7 +265,7 @@ function load_attract(dict) {
         var ndiv = document.createElement("div")
         ndiv.setAttribute("id","attr"+i)
         ndiv.className = "attrBox"
-        ndiv.innerHTML = "<b>" + dict["place"+i]["title"] +  "</b> [" + dict["place"+i]["rating"] + "] <br> " +  dict["place"+i]["address"]
+        ndiv.innerHTML = "<b>" + dict["place"+i]["title"] +  "</b> <br> " +  dict["place"+i]["address"]
         document.getElementById("attract").appendChild(ndiv)
     }
     /**
