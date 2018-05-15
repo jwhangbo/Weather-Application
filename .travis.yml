@@ -4,7 +4,7 @@ node_js:
 deploy:
 provider: pages
 skip-cleanup: true
-github-token: $99db3a943c4eee86099dcc43a97d237446b13cac
+github-token: $TravisCIWeather
 keep-history: true
 on:
 branch: master 
