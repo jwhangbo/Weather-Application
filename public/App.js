@@ -3,10 +3,13 @@
  */
 function load(){
     document.getElementById("loadScreen").style.display = "block";
+    document.getElementById("news").style.display = "none";
+    document.getElementById("weather").style.display = "none";
 }
-
 function unload(){
     document.getElementById("loadScreen").style.display = "none";
+    document.getElementById("news").style.display = "block";
+    document.getElementById("weather").style.display = "block";
 }
 
 /**
