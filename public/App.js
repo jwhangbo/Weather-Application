@@ -1,4 +1,18 @@
 /**
+ * Functions for turning the loading screen on and off.
+ */
+function load(){
+    document.getElementById("loadScreen").style.display = "block";
+    document.getElementById("news").style.display = "none";
+    document.getElementById("weather").style.display = "none";
+}
+function unload(){
+    document.getElementById("loadScreen").style.display = "none";
+    document.getElementById("news").style.display = "block";
+    document.getElementById("weather").style.display = "block";
+}
+
+/**
  * List of shortened month names
  * @type {Array}
  */
@@ -105,6 +119,7 @@ function load_attract(dict) {
             var placename = place["title"]
             var placerating = place["rating"]
             var address = place["address"]
+            var coordict = {query:{coor:{latitude: lati, longitude: longi}}, task:"get_ratings"}
             var ContentString = `<h6>${placename}</h6>`+
                 `<h5>${placerating+"★"}</h5>` +
                 `<p>${address}</p>`;
@@ -132,23 +147,32 @@ function load_attract(dict) {
 
             document.getElementById("attr"+i).addEventListener('click', function(){
                 marker.setIcon(icon2);
+                reviews_ajax(coordict).then((msg)=>{
+                  console.log(msg)
+                })
                 infowindow.setContent(ContentString);
                 infowindow.open(map, marker);
                 map.setCenter(marker.position)
                 map.setZoom(17);
+                
             })
 
             google.maps.event.addListener(marker, 'click', function(){
                 marker.setIcon(icon2);
+                reviews_ajax(coordict).then((msg)=>{
+                  console.log(msg)
+                })
                 infowindow.setContent(this.contentString);
                 infowindow.open(map, this);
                 map.setCenter(this.position)
+                
             })
 
             google.maps.event.addListener(infowindow, 'closeclick', function(){
                marker.setIcon(icon1)
             });
         }());
+
     }
 };
 
@@ -159,7 +183,9 @@ function reset_attr(){
     document.getElementById("attract").appendChild(ndiv)
 }
 
+
 // Function calls
+
 geo();
 
 
@@ -172,6 +198,8 @@ geo();
 $(function() {
     $('#sub').click(function(e) {
         e.preventDefault();
+        load();
+        setTimeout(unload, 3500);
         console.log('select_link clicked');
 
         /**
@@ -181,28 +209,30 @@ $(function() {
         var search = {}
         search.location = $('#Searchbox').val();
         search.filter = get_radial()
-        ajax(search)
+        location_search_ajax(search)
     })
 
     $('#Searchbox').keypress(function(e) {
         if(e.which == 13) {
             e.preventDefault();
+            load();
+            setTimeout(unload, 3500);
             console.log('select_link clicked');
 
-            /**
+            /*
              * Gets value from searchbox to search for location
              * @type {Object}
              */
-            var search = {}
+            var search = {task:"find"}
             search.location = $('#Searchbox').val();
             search.filter = get_radial()
             console.log(search)
-            ajax(search)
+            location_search_ajax(search)
         }
     })
 })
 
-function ajax(search){
+function location_search_ajax(search){
     $.ajax({
             type: 'POST',
             data: JSON.stringify(search),
@@ -226,18 +256,23 @@ function ajax(search){
     })
 }
 
-function ajax_place(search){
-    $.ajax({
-        type: 'POST',
-        data: JSON.stringify(search),
-        contentType: 'application/json',
-        url: 'http://localhost:8080/',
-        success: function(data){
-            console.log("successfully got review data")
-            var returned = JSON.parse(data)
-            console.log(returned)
-        }
+function reviews_ajax(search){
+    // search must be formatted as
+    // {coor: {latitude: lat, longitude, long}}
+    return new Promise((resolve)=>{
+        $.ajax({
+            type: 'POST',
+            data: JSON.stringify(search),
+            contentType: 'application/json',
+            url: 'http://localhost:8080/',
+            success: function(data){
+                console.log("successfully got review data")
+                var returned = JSON.parse(data)
+                resolve(returned)
+            }
+        })
     })
+
 }
 
 /**
@@ -255,7 +290,6 @@ function loadinfo(returned) {
     document.getElementById("weather").innerHTML = returned.requested["summary"]
     document.getElementById("lat").innerHTML = returned.requested["lat"]
     document.getElementById("lng").innerHTML = returned.requested["long"]
-
 }
 
 /**
