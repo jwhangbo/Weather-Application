@@ -13,6 +13,7 @@ module.exports.get_location = function(place, key) {
                 json: true
             },
             (err, resp, body) => {
+                console.log(link)
                 const types = body.results[0].address_components[0].types
                 if (body.status === "OK" && types.indexOf("locality")>= 0) {
                     dict.location = (body.results[0].address_components[0].long_name)
