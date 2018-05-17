@@ -57,7 +57,8 @@ app.post('/', function(request, response) {
     }
     else if (request.body.task === "get_ratings"){
         //response.send(JSON.stringify({message: "this worked"}))
-        reviews.database({test: "hello"}, uri, "test").then((data)=>{
+        //console.log(request.body.query)
+        reviews.database(request.body.query, uri, "find").then((data)=>{
             response.send(JSON.stringify(data))
         })
     }

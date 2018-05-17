@@ -10,6 +10,7 @@ const ReviewSchema = mongoose.Schema({
 })
 
 module.exports.database=function(dict, uri, action){
+//function database(dict, uri, action){
     return new Promise((resolve, reject) =>{
     mongoose.connect(uri)
     var db = mongoose.connection;
@@ -66,9 +67,10 @@ module.exports.database=function(dict, uri, action){
 var reviewstring = "THIS PLACE SUX"
 var uri = "mongodb+srv://Website:Gundam123@weatherhistory-cw0lw.mongodb.net/test?retryWrites=true";
 var mockdict = {coor:{latitude:"49", longitude: "-122"}, author: "Buttsman the great", review: "THIS PLACE SUX2", rating: 0, date:"2018-05-14"}
-var coor = {coor:{latitude:"49", longitude:"-122"}}
-
-Database(mockdict, uri, "add").then((item)=>{
+var coor = {coor:{latitude:"50", longitude:"-1220"}}
+*/
+/*
+atabase(mockdict, uri, "add").then((item)=>{
     console.log(item)
 })
 
@@ -76,7 +78,7 @@ Database(coor, uri, "test").then((item)=>{
     console.log(item)
 })
 
-Database(coor, uri, "find").then((item)=>{
+database(coor, uri, "find").then((item)=>{
     console.log(item)
 })
 */
